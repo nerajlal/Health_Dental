@@ -1,0 +1,119 @@
+@extends('layouts.app')
+
+@section('title', 'Manage Products')
+
+@section('content')
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Manage Products</h1>
+        <p class="mt-2 text-gray-600">View and manage all products from distributors</p>
+    </div>
+
+    <div class="bg-white rounded-lg shadow p-6 mb-6">
+        <form action="{{ route('admin.products.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search products..."
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <select name="distributor" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    <option value="">All Distributors</option>
+                    @foreach($distributors as $distributor)
+                    <option value="{{ $distributor->id }}" {{ request('distributor') == $distributor->id ? 'selected' : '' }}>
+                        {{ $distributor->name }}
+                    </option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
+                    <i class="fas fa-search mr-2"></i>Search
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="min-w-full divide-y divide-gray-200">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">SKU</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Distributor</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Base Price</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Stock</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white divide-y divide-gray-200">
+                @forelse($products as $product)
+                <tr>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="flex items-center">
+                            @if($product->image)
+                            <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="h-10 w-10 rounded-full">
+                            @else
+                            <div class="h-10 w-10 rounded-full bg-gray-200 flex items-center justify-center">
+                                <i class="fas fa-tooth text-gray-400"></i>
+                            </div>
+                            @endif
+                            <div class="ml-4">
+                                <div class="text-sm font-medium text-gray-900">{{ $product->name }}</div>
+                                <div class="text-sm text-gray-500">{{ $product->company ?? 'N/A' }}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $product->sku }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $product->distributor->name }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        @if($product->category)
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-purple-100 text-purple-800">
+                            {{ $product->category }}
+                        </span>
+                        @else
+                        <span class="text-sm text-gray-500">N/A</span>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">${{ number_format($product->base_price, 2) }}</div>
+                        <div class="text-sm text-gray-500">per {{ $product->unit }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm text-gray-900">{{ $product->stock_quantity }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $product->is_active ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                            {{ $product->is_active ? 'Active' : 'Inactive' }}
+                        </span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                        <a href="{{ route('admin.products.edit', $product) }}" class="text-blue-600 hover:text-blue-900 mr-2">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a href="{{ route('admin.products.custom-pricing', $product) }}" class="text-green-600 hover:text-green-900">
+                            <i class="fas fa-dollar-sign"></i>
+                        </a>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="8" class="px-6 py-4 text-center text-gray-500">
+                        No products found.
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-6">
+        {{ $products->links() }}
+    </div>
+</div>
+@endsection
