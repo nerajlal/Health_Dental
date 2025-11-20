@@ -143,7 +143,7 @@
     </div>
 
     <!-- Recent Bulk Orders -->
-    @if($bulkOrders->count() > 0)
+    @if($recentBulkOrders->count() > 0)
     <div class="bg-white rounded-lg shadow mt-8">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-900">Recent Bulk Orders</h2>
