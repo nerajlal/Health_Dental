@@ -10,13 +10,55 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::where('distributor_id', Auth::id())
-            ->orderBy('created_at', 'desc')
-            ->paginate(20);
+        $distributorId = Auth::id();
+        
+        $query = Product::where('distributor_id', $distributorId);
 
-        return view('distributor.products.index', compact('products'));
+        if ($request->search) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('sku', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        if ($request->status) {
+            if ($request->status === 'active') {
+                $query->where('status', 'approved')->where('is_active', true);
+            } elseif ($request->status === 'inactive') {
+                $query->where(function($q) {
+                    $q->where('status', 'rejected')
+                    ->orWhere('is_active', false);
+                });
+            } elseif ($request->status === 'pending') {
+                $query->where('status', 'pending');
+            }
+        }
+
+        $products = $query->orderBy('created_at', 'desc')->paginate(12);
+
+        // Calculate stats
+        $stats = [
+            'total' => Product::where('distributor_id', $distributorId)->count(),
+            'active' => Product::where('distributor_id', $distributorId)
+                ->where('status', 'approved')
+                ->where('is_active', true)
+                ->count(),
+            'pending' => Product::where('distributor_id', $distributorId)
+                ->where('status', 'pending')
+                ->count(),
+            'low_stock' => Product::where('distributor_id', $distributorId)
+                ->where('stock_quantity', '<', 10)
+                ->where('stock_quantity', '>', 0)
+                ->count(),
+            'out_of_stock' => Product::where('distributor_id', $distributorId)
+                ->where('stock_quantity', 0)
+                ->count(),
+        ];
+
+        return view('distributor.products.index', compact('products', 'stats'));
     }
 
     public function create()
