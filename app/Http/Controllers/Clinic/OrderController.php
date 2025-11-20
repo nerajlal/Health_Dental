@@ -73,64 +73,45 @@ class OrderController extends Controller
         $cart = session()->get('cart', []);
         
         if (empty($cart)) {
-            return redirect()->route('clinic.products.index')
-                ->with('error', 'Your cart is empty.');
+            return redirect()->route('clinic.cart')->with('error', 'Your cart is empty');
         }
 
-        DB::beginTransaction();
-        try {
-            $clinicId = Auth::id();
-            $products = Product::whereIn('id', array_keys($cart))->get();
+        $clinicId = Auth::id();
+        $products = Product::whereIn('id', array_keys($cart))->get();
+        
+        $totalAmount = 0;
+        
+        // Calculate total
+        foreach ($products as $product) {
+            $price = $product->getPriceForClinic($clinicId);
+            $quantity = $cart[$product->id];
+            $totalAmount += $price * $quantity;
+        }
+        
+        // Create order
+        $order = Order::create([
+            'clinic_id' => $clinicId,
+            'total_amount' => $totalAmount,
+            'status' => 'pending',
+        ]);
+        
+        // Create order items
+        foreach ($products as $product) {
+            $price = $product->getPriceForClinic($clinicId);
+            $quantity = $cart[$product->id];
             
-            $customPrices = CustomPricing::where('clinic_id', $clinicId)
-                ->whereIn('product_id', array_keys($cart))
-                ->pluck('custom_price', 'product_id');
-
-            $margin = 15;
-            $totalAmount = 0;
-
-            // Create order
-            $order = Order::create([
-                'clinic_id' => $clinicId,
-                'status' => 'pending',
-                'total_amount' => 0
+            OrderItem::create([
+                'order_id' => $order->id,
+                'product_id' => $product->id,
+                'quantity' => $quantity,
+                'price' => $price,
             ]);
-
-            // Create order items
-            foreach ($products as $product) {
-                if (isset($customPrices[$product->id])) {
-                    $price = $customPrices[$product->id];
-                } else {
-                    $price = $product->base_price * (1 + ($margin / 100));
-                }
-
-                $quantity = $cart[$product->id];
-                $subtotal = $price * $quantity;
-                $totalAmount += $subtotal;
-
-                OrderItem::create([
-                    'order_id' => $order->id,
-                    'product_id' => $product->id,
-                    'quantity' => $quantity,
-                    'price' => $price
-                ]);
-            }
-
-            // Update order total
-            $order->update(['total_amount' => $totalAmount]);
-
-            // Clear cart
-            session()->forget('cart');
-
-            DB::commit();
-
-            return redirect()->route('clinic.orders.show', $order)
-                ->with('success', 'Order placed successfully!');
-        } catch (\Exception $e) {
-            DB::rollback();
-            return redirect()->back()
-                ->with('error', 'Failed to place order: ' . $e->getMessage());
         }
+        
+        // Clear cart
+        session()->forget('cart');
+        
+        return redirect()->route('clinic.orders.show', $order)->with('success', 'Order placed successfully! Waiting for admin approval.');
     }
 
     public function addToCart(Request $request, Product $product)
