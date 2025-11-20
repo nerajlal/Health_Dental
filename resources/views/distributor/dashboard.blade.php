@@ -46,7 +46,7 @@
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
-                        <dt class="text-sm font-medium text-gray-500 truncate">Pending Bulk Orders</dt>
+                        <dt class="text-sm font-medium text-gray-500 truncate">Pending Orders</dt>
                         <dd class="text-3xl font-bold text-gray-900">{{ $stats['pending_bulk_orders'] }}</dd>
                     </dl>
                 </div>
@@ -69,7 +69,7 @@
     </div>
 
     <!-- Quick Actions -->
-    <div class="mb-8">
+    <div class="bg-white rounded-lg shadow p-6 mb-8">
         <h2 class="text-xl font-semibold text-gray-900 mb-4">Quick Actions</h2>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <a href="{{ route('distributor.products.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-6 rounded-lg shadow text-center transition">
@@ -104,9 +104,23 @@
                         </div>
                         <div class="text-right ml-4">
                             <p class="text-lg font-bold text-gray-900">${{ number_format($product->base_price, 2) }}</p>
-                            <span class="text-xs {{ $product->is_active ? 'text-green-600' : 'text-red-600' }}">
-                                {{ $product->is_active ? 'Active' : 'Inactive' }}
-                            </span>
+                            @if($product->status == 'pending')
+                                <span class="text-xs text-yellow-600">
+                                    <i class="fas fa-clock"></i> Pending
+                                </span>
+                            @elseif($product->status == 'approved' && $product->is_active)
+                                <span class="text-xs text-green-600">
+                                    <i class="fas fa-check-circle"></i> Active
+                                </span>
+                            @elseif($product->status == 'rejected')
+                                <span class="text-xs text-red-600">
+                                    <i class="fas fa-times-circle"></i> Rejected
+                                </span>
+                            @else
+                                <span class="text-xs text-gray-600">
+                                    <i class="fas fa-pause-circle"></i> Inactive
+                                </span>
+                            @endif
                         </div>
                     </div>
                     @empty
@@ -130,7 +144,7 @@
                             <p class="text-sm text-gray-500">${{ number_format($product->base_price, 2) }} per {{ $product->unit }}</p>
                         </div>
                         <div class="text-right ml-4">
-                            <p class="text-lg font-bold text-green-600">{{ $product->total_sold ?? 0 }}</p>
+                            <p class="text-lg font-bold text-green-600">{{ $product->order_items_sum_quantity ?? 0 }}</p>
                             <p class="text-xs text-gray-500">units sold</p>
                         </div>
                     </div>
@@ -143,11 +157,11 @@
     </div>
 
     <!-- Recent Bulk Orders -->
-    @if($recentBulkOrders->count() > 0)
-    <div class="bg-white rounded-lg shadow mt-8">
+    @if(isset($recentBulkOrders) && $recentBulkOrders->count() > 0)
+    <!-- <div class="bg-white rounded-lg shadow mt-8">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-900">Recent Bulk Orders</h2>
-            <a href="{{ route('distributor.bulk-orders') }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View All</a>
+            <a href="{{ route('distributor.orders.bulk') }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View All</a>
         </div>
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
@@ -161,25 +175,29 @@
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach($bulkOrders as $bulkOrder)
+                    @foreach($recentBulkOrders as $bulkOrder)
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
                             #{{ $bulkOrder->id }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${{ number_format($bulkOrder->total_amount, 2) }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                            ${{ number_format($bulkOrder->total_amount, 2) }}
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                 @if($bulkOrder->status == 'delivered') bg-green-100 text-green-800
-                                @elseif($bulkOrder->status == 'pending') bg-yellow-100 text-yellow-800
                                 @elseif($bulkOrder->status == 'processing') bg-blue-100 text-blue-800
+                                @elseif($bulkOrder->status == 'shipped') bg-indigo-100 text-indigo-800
                                 @else bg-gray-100 text-gray-800
                                 @endif">
                                 {{ ucfirst($bulkOrder->status) }}
                             </span>
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $bulkOrder->created_at->format('M d, Y') }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                            {{ $bulkOrder->created_at->format('M d, Y') }}
+                        </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <a href="{{ route('distributor.bulk-orders.show', $bulkOrder) }}" 
+                            <a href="{{ route('distributor.orders.bulk-show', $bulkOrder) }}" 
                                class="text-blue-600 hover:text-blue-800 font-medium">View Details</a>
                         </td>
                     </tr>
@@ -187,7 +205,7 @@
                 </tbody>
             </table>
         </div>
-    </div>
+    </div> -->
     @endif
 </div>
 @endsection

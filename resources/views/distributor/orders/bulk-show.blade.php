@@ -70,7 +70,7 @@
             </div>
 
             <!-- Breakdown by Clinic Orders -->
-            <div class="bg-white rounded-lg shadow mt-6">
+            <!-- <div class="bg-white rounded-lg shadow mt-6">
                 <div class="px-6 py-4 border-b border-gray-200">
                     <h2 class="text-xl font-semibold text-gray-900">Breakdown by Clinic Orders</h2>
                 </div>
@@ -92,7 +92,7 @@
                         @endforeach
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!-- Shipping Information -->
@@ -112,10 +112,10 @@
                         <p class="text-sm text-gray-500">Total Units:</p>
                         <p class="font-medium text-gray-900">{{ $bulkOrder->items->sum('total_quantity') }} units</p>
                     </div>
-                    <div>
+                    <!-- <div>
                         <p class="text-sm text-gray-500">Total Clinics:</p>
                         <p class="font-medium text-gray-900">{{ $bulkOrder->clinic_orders->count() }} clinics</p>
-                    </div>
+                    </div> -->
                     <div class="pt-3 border-t">
                         <p class="text-sm text-gray-500">Order Value:</p>
                         <p class="text-2xl font-bold text-gray-900">${{ number_format($bulkOrder->total_amount, 2) }}</p>
@@ -124,7 +124,7 @@
             </div>
 
             @if($bulkOrder->status != 'delivered')
-            <div class="bg-white rounded-lg shadow p-6">
+            <!-- <div class="bg-white rounded-lg shadow p-6">
                 <h2 class="text-xl font-semibold text-gray-900 mb-4">Update Status</h2>
                 <form action="{{ route('distributor.orders.update-bulk-status', $bulkOrder) }}" method="POST">
                     @csrf
@@ -141,10 +141,10 @@
                         </button>
                     </div>
                 </form>
-            </div>
+            </div> -->
             @endif
 
-            <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+            <!-- <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                 <div class="flex">
                     <i class="fas fa-info-circle text-yellow-600 text-xl mr-3"></i>
                     <div>
@@ -152,7 +152,7 @@
                         <p class="text-sm text-yellow-700 mt-1">Ship all products to the admin warehouse. The admin will then repack and distribute to individual clinics.</p>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
