@@ -33,6 +33,13 @@ class OrderController extends Controller
             });
         }
 
+        // Filter by shipment status
+        if ($request->shipped_status == 'shipped') {
+            $query->where('shipped_to_admin', true);
+        } elseif ($request->shipped_status == 'not_shipped') {
+            $query->where('shipped_to_admin', false);
+        }
+
         // Filter by date if provided
         if ($request->date_from) {
             $query->whereHas('order', function($q) use ($request) {
@@ -171,6 +178,36 @@ class OrderController extends Controller
 
         return redirect()->route('admin.orders.index')
             ->with('success', 'All pending orders approved successfully! Bulk orders created for distributors.');
+    }
+
+    public function markAsShipped(Request $request, OrderItem $orderItem)
+    {
+        // Verify this order item belongs to this distributor's product
+        if ($orderItem->product->distributor_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $orderItem->update([
+            'shipped_to_admin' => true,
+            'shipped_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'Product marked as shipped to admin warehouse!');
+    }
+
+    public function markAsNotShipped(Request $request, OrderItem $orderItem)
+    {
+        // Verify this order item belongs to this distributor's product
+        if ($orderItem->product->distributor_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $orderItem->update([
+            'shipped_to_admin' => false,
+            'shipped_at' => null,
+        ]);
+
+        return redirect()->back()->with('success', 'Shipment status updated!');
     }
 
 }

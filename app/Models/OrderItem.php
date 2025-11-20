@@ -14,11 +14,15 @@ class OrderItem extends Model
         'product_id',
         'quantity',
         'price',
+        'shipped_to_admin',
+        'shipped_at',
     ];
 
     protected $casts = [
         'quantity' => 'integer',
         'price' => 'decimal:2',
+        'shipped_to_admin' => 'boolean',
+        'shipped_at' => 'datetime',
     ];
 
     // Relationships

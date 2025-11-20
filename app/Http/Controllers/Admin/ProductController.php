@@ -14,19 +14,28 @@ class ProductController extends Controller
     {
         $query = Product::with('distributor');
 
-        if ($request->filled('search')) {
-            $query->where('name', 'like', '%' . $request->search . '%')
-                  ->orWhere('sku', 'like', '%' . $request->search . '%');
+        if ($request->search) {
+            $query->where(function($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%')
+                ->orWhere('sku', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%');
+            });
         }
 
-        if ($request->filled('distributor')) {
+        if ($request->distributor) {
             $query->where('distributor_id', $request->distributor);
         }
 
-        $products = $query->paginate(20);
-        $distributors = User::where('role', 'distributor')->get();
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
 
-        return view('admin.products.index', compact('products', 'distributors'));
+        $products = $query->orderBy('created_at', 'desc')->paginate(20);
+        
+        $distributors = User::where('role', 'distributor')->where('is_active', true)->get();
+        $pendingCount = Product::where('status', 'pending')->count();
+
+        return view('admin.products.index', compact('products', 'distributors', 'pendingCount'));
     }
 
     public function edit(Product $product)
