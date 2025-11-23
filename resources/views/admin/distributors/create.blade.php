@@ -50,11 +50,13 @@
                     <div>
                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
                         <div class="flex">
-                            <input type="text" name="country_code" id="country_code" value="91"
-                                   class="w-20 px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-50 text-gray-500 text-center"
-                                   readonly>
+                            <div class="flex items-center justify-center px-3 border border-gray-300 rounded-l-lg bg-gray-50 text-gray-500 border-r-0">
+                                <span class="mr-2 text-lg">🇮🇳</span>
+                                <span class="text-sm font-medium">+91</span>
+                            </div>
+                            <input type="hidden" name="country_code" value="91">
                             <input type="text" name="phone" id="phone" value="{{ old('phone') }}"
-                                   class="flex-1 px-4 py-2 border border-gray-300 border-l-0 rounded-r-lg focus:ring-blue-500 focus:border-blue-500"
+                                   class="flex-1 px-4 py-2 border border-gray-300 rounded-r-lg focus:ring-blue-500 focus:border-blue-500"
                                    placeholder="1234567890">
                         </div>
                         @error('phone')
