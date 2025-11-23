@@ -13,10 +13,15 @@ use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $orders = Order::where('clinic_id', Auth::id())
-            ->with('items.product')
+        $query = Order::where('clinic_id', Auth::id());
+
+        if ($request->has('status') && $request->status != '') {
+            $query->where('status', $request->status);
+        }
+
+        $orders = $query->with('items.product')
             ->orderBy('created_at', 'desc')
             ->paginate(20);
 
