@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\LandingController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\ClinicController as AdminClinic;
 use App\Http\Controllers\Admin\DistributorController as AdminDistributor;
@@ -21,9 +22,16 @@ use App\Http\Controllers\Distributor\OrderController as DistributorOrder;
 */
 
 // Redirect root to login
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+// Route::get('/', function () {
+//     return redirect()->route('login');
+// });
+
+Route::get('/', [LandingController::class, 'index'])->name('landing.index');
+Route::get('/about', [LandingController::class, 'about'])->name('landing.about');
+Route::get('/contact', [LandingController::class, 'contact'])->name('landing.contact');
+
+// Partner Registration
+Route::post('/partner/register', [LandingController::class, 'partnerRegister'])->name('partner.register');
 
 // Authentication Routes
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
