@@ -16,23 +16,23 @@
             <div class="bg-white rounded-lg shadow">
                 @foreach($products as $product)
                 <div class="p-6 border-b border-gray-200 last:border-b-0">
-                    <div class="flex items-center space-x-4">
+                    <div class="flex flex-col sm:flex-row items-center sm:space-x-4 space-y-4 sm:space-y-0">
                         @if($product->image)
                         <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" 
                              class="w-24 h-24 object-cover rounded">
                         @else
-                        <div class="w-24 h-24 bg-gray-200 rounded flex items-center justify-center">
+                        <div class="w-24 h-24 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
                             <i class="fas fa-tooth text-3xl text-gray-400"></i>
                         </div>
                         @endif
 
-                        <div class="flex-1">
+                        <div class="flex-1 text-center sm:text-left w-full sm:w-auto">
                             <h3 class="text-lg font-semibold text-gray-900">{{ $product->name }}</h3>
                             <p class="text-sm text-gray-500">{{ $product->distributor->name }}</p>
                             <p class="text-lg font-bold text-green-600 mt-2">${{ number_format($product->display_price, 2) }} per {{ $product->unit }}</p>
                         </div>
 
-                        <div class="flex items-center space-x-4">
+                        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-end">
                             <form action="{{ route('clinic.cart.update', $product) }}" method="POST" class="flex items-center space-x-2">
                                 @csrf
                                 @method('PUT')
@@ -43,7 +43,7 @@
                                        onchange="this.form.submit()">
                             </form>
 
-                            <div class="text-right">
+                            <div class="text-center sm:text-right">
                                 <p class="text-sm text-gray-500">Subtotal</p>
                                 <p class="text-lg font-bold text-gray-900">${{ number_format($product->subtotal, 2) }}</p>
                             </div>
