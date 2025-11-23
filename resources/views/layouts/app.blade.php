@@ -11,7 +11,7 @@
 <body class="bg-gray-50">
     <!-- Navigation -->
     @auth
-    <nav class="bg-white shadow-lg">
+    <nav class="bg-white shadow-lg fixed w-full z-50 top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
@@ -139,7 +139,7 @@
     @endauth
 
     <!-- Main Content -->
-    <main class="py-6">
+    <main class="py-6 mt-16">
         @if(session('success'))
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
                 <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">

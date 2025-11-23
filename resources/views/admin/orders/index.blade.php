@@ -40,7 +40,7 @@
             @endif
         </div>
 
-        <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="bg-white rounded-lg shadow overflow-hidden overflow-x-auto">
             @if($pendingOrders->count() > 0)
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-yellow-50">
@@ -112,7 +112,7 @@
             </h2>
         </div>
 
-        <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="bg-white rounded-lg shadow overflow-hidden overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-blue-50">
                     <tr>
@@ -196,7 +196,7 @@
             </h2>
         </div>
 
-        <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="bg-white rounded-lg shadow overflow-hidden overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200">
                 <thead class="bg-indigo-50">
                     <tr>

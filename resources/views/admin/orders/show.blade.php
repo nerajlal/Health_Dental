@@ -35,12 +35,12 @@
                 <div class="p-6">
                     <div class="space-y-4">
                         @foreach($order->items as $item)
-                        <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                            <div class="flex items-center space-x-4 flex-1">
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg space-y-4 sm:space-y-0">
+                            <div class="flex items-center space-x-4 w-full sm:w-auto">
                                 @if($item->product->image)
-                                <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-16 h-16 rounded object-cover">
+                                <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-16 h-16 rounded object-cover flex-shrink-0">
                                 @else
-                                <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
+                                <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
                                     <i class="fas fa-tooth text-gray-400 text-2xl"></i>
                                 </div>
                                 @endif
@@ -50,7 +50,7 @@
                                     <p class="text-sm text-gray-500">Distributor: {{ $item->product->distributor->name }}</p>
                                 </div>
                             </div>
-                            <div class="text-right">
+                            <div class="text-left sm:text-right w-full sm:w-auto pl-20 sm:pl-0">
                                 <p class="text-sm text-gray-500">Quantity: {{ $item->quantity }}</p>
                                 <p class="text-sm text-gray-500">Price: ${{ number_format($item->price, 2) }}</p>
                                 <p class="font-semibold text-gray-900">Total: ${{ number_format($item->quantity * $item->price, 2) }}</p>

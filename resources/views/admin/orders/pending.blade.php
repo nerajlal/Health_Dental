@@ -31,18 +31,18 @@
     <!-- Orders Grouped by Distributor -->
     <div class="space-y-6">
         @foreach($groupedByDistributor as $distributorId => $data)
-        <div class="bg-white rounded-lg shadow">
+        <div class="bg-white rounded-lg shadow overflow-hidden">
             <div class="px-6 py-4 bg-gray-50 border-b border-gray-200">
-                <div class="flex items-center justify-between">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between">
                     <h3 class="text-lg font-semibold text-gray-900">
                         {{ $data['distributor']->name }}
                     </h3>
-                    <span class="text-sm text-gray-600">
+                    <span class="text-sm text-gray-600 mt-1 sm:mt-0">
                         {{ count($data['items']) }} orders • ${{ number_format(collect($data['items'])->sum(function($item) { return $item['item']->quantity * $item['item']->price; }), 2) }}
                     </span>
                 </div>
             </div>
-            <div class="p-6">
+            <div class="p-6 overflow-x-auto">
                 <table class="min-w-full">
                     <thead>
                         <tr class="border-b">

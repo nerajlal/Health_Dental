@@ -74,12 +74,12 @@
             
             <div class="space-y-3">
                 @forelse($customPricing as $pricing)
-                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 transition">
-                    <div class="flex-1">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200 hover:border-blue-300 transition">
+                    <div class="flex-1 w-full sm:w-auto">
                         <p class="font-medium text-gray-900">{{ $pricing->clinic->name }}</p>
-                        <div class="mt-1 flex items-center space-x-4">
+                        <div class="mt-1 flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
                             <span class="text-sm text-gray-500">Custom: <strong class="text-green-600">${{ number_format($pricing->custom_price, 2) }}</strong></span>
-                            <span class="text-sm text-gray-400">•</span>
+                            <span class="text-sm text-gray-400 hidden sm:inline">•</span>
                             <span class="text-sm text-gray-500">Base: ${{ number_format($product->base_price, 2) }}</span>
                         </div>
                         @if($pricing->custom_price < $product->base_price)
@@ -88,7 +88,7 @@
                         </span>
                         @endif
                     </div>
-                    <form action="{{ route('admin.custom-pricing.destroy', $pricing) }}" method="POST" class="ml-4">
+                    <form action="{{ route('admin.custom-pricing.destroy', $pricing) }}" method="POST" class="mt-4 sm:mt-0 sm:ml-4 self-end sm:self-center">
                         @csrf
                         @method('DELETE')
                         <button type="submit" onclick="return confirm('Remove custom pricing for this clinic?')" 
