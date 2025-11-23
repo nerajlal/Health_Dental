@@ -80,20 +80,22 @@
                 <div class="p-6">
                     <div class="space-y-4">
                         @foreach($order->items as $item)
-                        <div class="flex items-center space-x-4 p-4 bg-gray-50 rounded-lg">
-                            @if($item->product->image)
-                            <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-20 h-20 rounded object-cover">
-                            @else
-                            <div class="w-20 h-20 bg-gray-200 rounded flex items-center justify-center">
-                                <i class="fas fa-tooth text-gray-400 text-2xl"></i>
+                        <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg">
+                            <div class="flex items-center space-x-4 w-full sm:w-auto mb-4 sm:mb-0">
+                                @if($item->product->image)
+                                <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-20 h-20 rounded object-cover flex-shrink-0">
+                                @else
+                                <div class="w-20 h-20 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
+                                    <i class="fas fa-tooth text-gray-400 text-2xl"></i>
+                                </div>
+                                @endif
+                                <div class="flex-1">
+                                    <h3 class="font-semibold text-gray-900">{{ $item->product->name }}</h3>
+                                    <p class="text-sm text-gray-500">SKU: {{ $item->product->sku }}</p>
+                                    <p class="text-sm text-gray-500">{{ $item->product->distributor->name }}</p>
+                                </div>
                             </div>
-                            @endif
-                            <div class="flex-1">
-                                <h3 class="font-semibold text-gray-900">{{ $item->product->name }}</h3>
-                                <p class="text-sm text-gray-500">SKU: {{ $item->product->sku }}</p>
-                                <p class="text-sm text-gray-500">{{ $item->product->distributor->name }}</p>
-                            </div>
-                            <div class="text-right">
+                            <div class="text-left sm:text-right w-full sm:w-auto pl-24 sm:pl-0">
                                 <p class="text-sm text-gray-500">Quantity: {{ $item->quantity }}</p>
                                 <p class="text-sm text-gray-500">Price: ${{ number_format($item->price, 2) }}</p>
                                 <p class="font-semibold text-gray-900">Total: ${{ number_format($item->quantity * $item->price, 2) }}</p>

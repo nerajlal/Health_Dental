@@ -27,12 +27,12 @@
                     <!-- Product List -->
                     <div id="productList" class="space-y-3 max-h-96 overflow-y-auto">
                         @foreach($products as $product)
-                        <div class="product-item flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-blue-500 transition" data-name="{{ strtolower($product->name) }}" data-sku="{{ strtolower($product->sku) }}">
-                            <div class="flex items-center space-x-4 flex-1">
+                        <div class="product-item flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border border-gray-200 rounded-lg hover:border-blue-500 transition" data-name="{{ strtolower($product->name) }}" data-sku="{{ strtolower($product->sku) }}">
+                            <div class="flex items-center space-x-4 flex-1 w-full sm:w-auto mb-4 sm:mb-0">
                                 @if($product->image)
-                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-16 h-16 rounded object-cover">
+                                <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-16 h-16 rounded object-cover flex-shrink-0">
                                 @else
-                                <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center">
+                                <div class="w-16 h-16 bg-gray-200 rounded flex items-center justify-center flex-shrink-0">
                                     <i class="fas fa-tooth text-gray-400"></i>
                                 </div>
                                 @endif
@@ -43,7 +43,7 @@
                                     <p class="font-medium text-blue-600">${{ number_format($product->display_price, 2) }} per {{ $product->unit }}</p>
                                 </div>
                             </div>
-                            <div class="flex items-center space-x-2">
+                            <div class="flex items-center space-x-2 w-full sm:w-auto justify-end">
                                 <input type="number" name="products[{{ $product->id }}][quantity]" 
                                        class="w-20 px-3 py-2 border border-gray-300 rounded-lg text-center product-quantity"
                                        min="0" max="{{ $product->stock_quantity }}" value="0"
