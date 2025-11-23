@@ -48,9 +48,14 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
                         <label for="phone" class="block text-sm font-medium text-gray-700 mb-2">Phone</label>
-                        <input type="text" name="phone" id="phone" value="{{ old('phone') }}"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
-                               placeholder="1234567890">
+                        <div class="flex">
+                            <input type="text" name="country_code" id="country_code" value="91"
+                                   class="w-20 px-4 py-2 border border-gray-300 rounded-l-lg focus:ring-blue-500 focus:border-blue-500 bg-gray-50 text-gray-500 text-center"
+                                   readonly>
+                            <input type="text" name="phone" id="phone" value="{{ old('phone') }}"
+                                   class="flex-1 px-4 py-2 border border-gray-300 border-l-0 rounded-r-lg focus:ring-blue-500 focus:border-blue-500"
+                                   placeholder="1234567890">
+                        </div>
                         @error('phone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
