@@ -10,7 +10,7 @@
             <p class="mt-2 text-gray-600">Add, edit, or remove dental clinics</p>
         </div>
         <a href="{{ route('admin.clinics.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
-            <i class="fas fa-plus mr-2"></i>Add New Clinic
+            <i class="fas fa-plus mr-2"></i>Add Clinic
         </a>
     </div>
 
