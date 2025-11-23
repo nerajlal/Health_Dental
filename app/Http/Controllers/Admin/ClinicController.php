@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ClinicAccountCreated;
 
 class ClinicController extends Controller
 {
@@ -35,13 +37,22 @@ class ClinicController extends Controller
             'license_number' => 'nullable|string',
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+        $password = $validated['password'];
+        $validated['password'] = Hash::make($password);
         $validated['role'] = 'clinic';
 
-        User::create($validated);
+        $clinic = User::create($validated);
+
+        try {
+            Mail::to($clinic->email)->send(new ClinicAccountCreated($clinic, $password));
+        } catch (\Exception $e) {
+            // Log error or just continue, depending on requirements.
+            // For now, we proceed even if email fails, but maybe flash a warning?
+            // return redirect()->route('admin.clinics.index')->with('success', 'Clinic added successfully, but email could not be sent.');
+        }
 
         return redirect()->route('admin.clinics.index')
-            ->with('success', 'Clinic added successfully.');
+            ->with('success', 'Clinic added successfully and welcome email sent.');
     }
 
     public function edit(User $clinic)

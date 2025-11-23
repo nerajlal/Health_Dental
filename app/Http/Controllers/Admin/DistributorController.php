@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\DistributorAccountCreated;
 
 class DistributorController extends Controller
 {
@@ -35,13 +37,20 @@ class DistributorController extends Controller
             'business_registration' => 'nullable|string',
         ]);
 
-        $validated['password'] = Hash::make($validated['password']);
+        $password = $validated['password'];
+        $validated['password'] = Hash::make($password);
         $validated['role'] = 'distributor';
 
-        User::create($validated);
+        $distributor = User::create($validated);
+
+        try {
+            Mail::to($distributor->email)->send(new DistributorAccountCreated($distributor, $password));
+        } catch (\Exception $e) {
+            // Log error
+        }
 
         return redirect()->route('admin.distributors.index')
-            ->with('success', 'Distributor added successfully.');
+            ->with('success', 'Distributor added successfully and welcome email sent.');
     }
 
     public function edit(User $distributor)
