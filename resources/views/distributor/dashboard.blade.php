@@ -97,12 +97,12 @@
             <div class="p-6">
                 <div class="space-y-4">
                     @forelse($recentProducts as $product)
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                        <div class="flex-1">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                        <div class="flex-1 w-full sm:w-auto mb-2 sm:mb-0">
                             <h3 class="font-semibold text-gray-900">{{ $product->name }}</h3>
                             <p class="text-sm text-gray-500">SKU: {{ $product->sku }}</p>
                         </div>
-                        <div class="text-right ml-4">
+                        <div class="text-left sm:text-right w-full sm:w-auto">
                             <p class="text-lg font-bold text-gray-900">${{ number_format($product->base_price, 2) }}</p>
                             @if($product->status == 'pending')
                                 <span class="text-xs text-yellow-600">
@@ -138,12 +138,12 @@
             <div class="p-6">
                 <div class="space-y-4">
                     @forelse($topProducts as $product)
-                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-                        <div class="flex-1">
+                    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg">
+                        <div class="flex-1 w-full sm:w-auto mb-2 sm:mb-0">
                             <h3 class="font-semibold text-gray-900">{{ $product->name }}</h3>
                             <p class="text-sm text-gray-500">${{ number_format($product->base_price, 2) }} per {{ $product->unit }}</p>
                         </div>
-                        <div class="text-right ml-4">
+                        <div class="text-left sm:text-right w-full sm:w-auto">
                             <p class="text-lg font-bold text-green-600">{{ $product->order_items_sum_quantity ?? 0 }}</p>
                             <p class="text-xs text-gray-500">units sold</p>
                         </div>

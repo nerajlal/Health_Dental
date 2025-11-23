@@ -34,12 +34,12 @@
         @forelse($bulkOrders as $bulkOrder)
         <div class="bg-white rounded-lg shadow hover:shadow-lg transition">
             <div class="p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <div>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
+                    <div class="mb-4 sm:mb-0">
                         <h3 class="text-xl font-semibold text-gray-900">Bulk Order #{{ $bulkOrder->id }}</h3>
                         <p class="text-sm text-gray-500">Created on {{ $bulkOrder->created_at->format('M d, Y h:i A') }}</p>
                     </div>
-                    <div class="text-right">
+                    <div class="text-left sm:text-right w-full sm:w-auto">
                         <span class="inline-block px-3 py-1 text-sm font-semibold rounded-full 
                             @if($bulkOrder->status == 'delivered') bg-green-100 text-green-800
                             @elseif($bulkOrder->status == 'pending') bg-yellow-100 text-yellow-800
