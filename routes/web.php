@@ -74,6 +74,11 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/orders/pending/list', [AdminOrder::class, 'pending'])->name('orders.pending');
     Route::post('/orders/approve-all', [AdminOrder::class, 'approveAll'])->name('orders.approve-all');
     Route::put('/orders/{order}/status', [AdminOrder::class, 'updateStatus'])->name('orders.update-status');
+
+    // Margins & Profit Analysis
+    Route::get('/margins', [App\Http\Controllers\Admin\MarginController::class, 'index'])->name('margin');
+    Route::get('/margins/product-analysis', [App\Http\Controllers\Admin\MarginController::class, 'productAnalysis'])->name('margin.products');
+    Route::get('/margins/distributor-analysis', [App\Http\Controllers\Admin\MarginController::class, 'distributorAnalysis'])->name('margin.distributors');
 });
 
 // Clinic Routes
