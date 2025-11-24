@@ -141,34 +141,34 @@ class OrderController extends Controller
 
     public function cart()
     {
+        $clinic = auth()->user();
+        
+        // Get cart items from session
         $cart = session()->get('cart', []);
         
+        // If cart is empty, return empty collection
         if (empty($cart)) {
-            return view('clinic.orders.cart', ['products' => [], 'total' => 0]);
+            return view('clinic.orders.cart', [
+                'products' => collect([]),
+                'total' => 0
+            ]);
         }
-
-        $products = Product::whereIn('id', array_keys($cart))->get();
-        $clinicId = Auth::id();
         
-        $customPrices = CustomPricing::where('clinic_id', $clinicId)
-            ->whereIn('product_id', array_keys($cart))
-            ->pluck('custom_price', 'product_id');
-
-        $margin = 15;
-        $total = 0;
-
-        foreach ($products as $product) {
-            if (isset($customPrices[$product->id])) {
-                $price = $customPrices[$product->id];
-            } else {
-                $price = $product->base_price * (1 + ($margin / 100));
-            }
-            $product->display_price = $price;
-            $product->quantity = $cart[$product->id];
-            $product->subtotal = $price * $cart[$product->id];
-            $total += $product->subtotal;
-        }
-
+        // Get products with cart data
+        $productIds = array_keys($cart);
+        $products = Product::whereIn('id', $productIds)
+            ->where('is_active', true)
+            ->with('distributor')
+            ->get()
+            ->map(function($product) use ($cart) {
+                $product->quantity = $cart[$product->id]['quantity'];
+                $product->subtotal = $product->price * $product->quantity;
+                return $product;
+            });
+        
+        // Calculate total
+        $total = $products->sum('subtotal');
+        
         return view('clinic.orders.cart', compact('products', 'total'));
     }
 

@@ -63,7 +63,7 @@
                             @endif">
                             {{ ucfirst($order->status) }}
                         </span>
-                        <p class="text-2xl font-bold text-gray-900 mt-2">${{ number_format($order->total_amount, 2) }}</p>
+                        <p class="text-2xl font-bold text-gray-900 mt-2">₹{{ number_format($order->total_amount, 2) }}</p>
                     </div>
                 </div>
 

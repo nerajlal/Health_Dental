@@ -115,6 +115,11 @@ Route::middleware(['auth'])->prefix('distributor')->name('distributor.')->group(
     Route::get('/orders/bulk/{bulkOrder}', [DistributorOrder::class, 'showBulkOrder'])->name('orders.bulk-show');
     Route::put('/orders/bulk/{bulkOrder}/status', [DistributorOrder::class, 'updateBulkOrderStatus'])->name('orders.update-bulk-status');
 
+    // Distributor Analytics
+    Route::get('/analytics', [App\Http\Controllers\Distributor\AnalyticsController::class, 'index'])->name('analytics');
+    Route::get('/analytics/products', [App\Http\Controllers\Distributor\AnalyticsController::class, 'productAnalysis'])->name('analytics.products');
+    Route::get('/analytics/clinics', [App\Http\Controllers\Distributor\AnalyticsController::class, 'clinicAnalysis'])->name('analytics.clinics');
+
     // Mark order items as shipped
     Route::put('/order-items/{orderItem}/mark-shipped', [DistributorOrder::class, 'markAsShipped'])->name('order-items.mark-shipped');
     Route::put('/order-items/{orderItem}/mark-not-shipped', [DistributorOrder::class, 'markAsNotShipped'])->name('order-items.mark-not-shipped');

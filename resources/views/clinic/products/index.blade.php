@@ -64,7 +64,7 @@
                     <div>
                         <p class="text-sm text-gray-500">Price</p>
                         <p class="text-2xl font-bold text-gray-900">
-                            ${{ number_format($product->display_price ?? $product->base_price * 1.15, 2) }}
+                            ₹{{ number_format($product->display_price ?? $product->base_price * 1.15, 2) }}
                         </p>
                         <p class="text-xs text-gray-500">per {{ $product->unit }}</p>
                     </div>

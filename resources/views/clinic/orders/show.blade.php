@@ -97,8 +97,8 @@
                             </div>
                             <div class="text-left sm:text-right w-full sm:w-auto pl-24 sm:pl-0">
                                 <p class="text-sm text-gray-500">Quantity: {{ $item->quantity }}</p>
-                                <p class="text-sm text-gray-500">Price: ${{ number_format($item->price, 2) }}</p>
-                                <p class="font-semibold text-gray-900">Total: ${{ number_format($item->quantity * $item->price, 2) }}</p>
+                                <p class="text-sm text-gray-500">Price: ₹{{ number_format($item->price, 2) }}</p>
+                                <p class="font-semibold text-gray-900">Total: ₹{{ number_format($item->quantity * $item->price, 2) }}</p>
                             </div>
                         </div>
                         @endforeach
@@ -107,7 +107,7 @@
                     <div class="mt-6 pt-6 border-t border-gray-200">
                         <div class="flex justify-between items-center">
                             <span class="text-xl font-semibold text-gray-900">Order Total:</span>
-                            <span class="text-3xl font-bold text-gray-900">${{ number_format($order->total_amount, 2) }}</span>
+                            <span class="text-3xl font-bold text-gray-900">₹{{ number_format($order->total_amount, 2) }}</span>
                         </div>
                     </div>
                 </div>
@@ -137,7 +137,7 @@
                     </div>
                     <div class="flex justify-between pt-3 border-t">
                         <span class="text-gray-900 font-semibold">Total Amount:</span>
-                        <span class="font-bold text-gray-900">${{ number_format($order->total_amount, 2) }}</span>
+                        <span class="font-bold text-gray-900">₹{{ number_format($order->total_amount, 2) }}</span>
                     </div>
                 </div>
             </div>

@@ -141,7 +141,7 @@
                         @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-900">${{ number_format($product->base_price, 2) }}</div>
+                        <div class="text-sm text-gray-900">₹{{ number_format($product->base_price, 2) }}</div>
                         <div class="text-sm text-gray-500">per {{ $product->unit }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">

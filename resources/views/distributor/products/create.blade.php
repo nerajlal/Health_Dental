@@ -99,9 +99,9 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <!-- Base Price -->
                     <div>
-                        <label for="base_price" class="block text-sm font-medium text-gray-700 mb-2">Base Price (USD) *</label>
+                        <label for="base_price" class="block text-sm font-medium text-gray-700 mb-2">Base Price (INR) *</label>
                         <div class="relative">
-                            <span class="absolute left-3 top-2 text-gray-500 font-medium">$</span>
+                            <span class="absolute left-3 top-2 text-gray-500 font-medium">₹</span>
                             <input type="number" name="base_price" id="base_price" value="{{ old('base_price') }}" step="0.01" min="0" required
                                    class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                    placeholder="0.00">

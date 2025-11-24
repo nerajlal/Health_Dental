@@ -56,12 +56,12 @@
         <div class="bg-white rounded-lg shadow p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
-                    <i class="fas fa-dollar-sign text-white text-2xl"></i>
+                    <i class="fas fa-indian-rupee-sign text-white text-2xl"></i>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
                         <dt class="text-sm font-medium text-gray-500 truncate">Total Revenue</dt>
-                        <dd class="text-2xl font-bold text-gray-900">${{ number_format($stats['total_revenue'], 2) }}</dd>
+                        <dd class="text-2xl font-bold text-gray-900">₹{{ number_format($stats['total_revenue'], 2) }}</dd>
                     </dl>
                 </div>
             </div>
@@ -103,7 +103,7 @@
                             <p class="text-sm text-gray-500">SKU: {{ $product->sku }}</p>
                         </div>
                         <div class="text-left sm:text-right w-full sm:w-auto">
-                            <p class="text-lg font-bold text-gray-900">${{ number_format($product->base_price, 2) }}</p>
+                            <p class="text-lg font-bold text-gray-900">₹{{ number_format($product->base_price, 2) }}</p>
                             @if($product->status == 'pending')
                                 <span class="text-xs text-yellow-600">
                                     <i class="fas fa-clock"></i> Pending

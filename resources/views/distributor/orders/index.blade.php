@@ -62,7 +62,8 @@
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Product</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quantity</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Your Price</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Your Earning</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order Status</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Shipment Status</th>
                     <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
@@ -71,6 +72,9 @@
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
                 @forelse($orderItems as $item)
+                @php
+                    $distributorEarning = $item->quantity * $item->product->base_price;
+                @endphp
                 <tr class="{{ $item->shipped_to_admin ? 'bg-green-50' : '' }}">
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm font-medium text-blue-600">#{{ $item->order->id }}</div>
@@ -95,7 +99,11 @@
                         <div class="text-xs text-gray-500">{{ $item->product->unit }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm font-medium text-gray-900">${{ number_format($item->quantity * $item->price, 2) }}</div>
+                        <div class="text-sm font-medium text-gray-900">₹{{ number_format($item->product->base_price, 2) }}</div>
+                        <div class="text-xs text-gray-500">per {{ $item->product->unit }}</div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <div class="text-sm font-bold text-green-600">₹{{ number_format($distributorEarning, 2) }}</div>
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -150,7 +158,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="8" class="px-6 py-12 text-center">
+                    <td colspan="9" class="px-6 py-12 text-center">
                         <i class="fas fa-inbox text-gray-300 text-5xl mb-3"></i>
                         <p class="text-gray-500 text-lg">No orders found</p>
                         <p class="text-gray-400 text-sm">Orders will appear here after admin approval</p>
@@ -158,6 +166,17 @@
                 </tr>
                 @endforelse
             </tbody>
+            @if($orderItems->count() > 0)
+            <tfoot class="bg-gray-50 font-bold">
+                <tr>
+                    <td colspan="4" class="px-6 py-4 text-sm text-gray-900 text-right">TOTAL EARNINGS ON THIS PAGE:</td>
+                    <td class="px-6 py-4 text-sm text-green-600">
+                        ₹{{ number_format($orderItems->sum(fn($item) => $item->quantity * $item->product->base_price), 2) }}
+                    </td>
+                    <td colspan="4"></td>
+                </tr>
+            </tfoot>
+            @endif
         </table>
     </div>
 
@@ -167,11 +186,11 @@
 
     <!-- Summary Stats -->
     @if($orderItems->count() > 0)
-    <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4">
+    <div class="mt-6 grid grid-cols-1 md:grid-cols-4 gap-4">
         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
             <div class="flex items-center justify-between">
                 <div>
-                    <p class="text-sm text-blue-600 font-medium">Total Orders</p>
+                    <p class="text-sm text-blue-600 font-medium">Total Order Items</p>
                     <p class="text-2xl font-bold text-blue-900">{{ $orderItems->total() }}</p>
                 </div>
                 <i class="fas fa-box text-blue-300 text-3xl"></i>
@@ -193,6 +212,17 @@
                     <p class="text-2xl font-bold text-yellow-900">{{ $orderItems->where('shipped_to_admin', false)->count() }}</p>
                 </div>
                 <i class="fas fa-clock text-yellow-300 text-3xl"></i>
+            </div>
+        </div>
+        <div class="bg-purple-50 border border-purple-200 rounded-lg p-4">
+            <div class="flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-purple-600 font-medium">Total Earnings (Page)</p>
+                    <p class="text-2xl font-bold text-purple-900">
+                        ₹{{ number_format($orderItems->sum(fn($item) => $item->quantity * $item->product->base_price), 2) }}
+                    </p>
+                </div>
+                <i class="fas fa-dollar-sign text-purple-300 text-3xl"></i>
             </div>
         </div>
     </div>

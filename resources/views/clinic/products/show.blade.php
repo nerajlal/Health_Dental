@@ -67,7 +67,7 @@
             <div class="bg-white rounded-lg shadow p-6">
                 <div class="mb-6">
                     <p class="text-sm text-gray-500 mb-1">Price per {{ $product->unit }}</p>
-                    <p class="text-4xl font-bold text-gray-900">${{ number_format($price, 2) }}</p>
+                    <p class="text-4xl font-bold text-gray-900">₹{{ number_format($price, 2) }}</p>
                     @if($hasCustomPricing)
                     <span class="inline-block mt-2 px-2 py-1 bg-green-100 text-green-800 text-xs font-semibold rounded">
                         Special pricing for your clinic

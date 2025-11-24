@@ -66,7 +66,7 @@
                 <p class="text-gray-600 text-sm mb-4 line-clamp-2">{{ $product->description }}</p>
                 
                 <div class="flex items-center justify-between mb-4">
-                    <span class="text-2xl font-bold text-green-600">${{ number_format($product->display_price, 2) }}</span>
+                    <span class="text-2xl font-bold text-green-600">₹{{ number_format($product->display_price, 2) }}</span>
                     <span class="text-sm text-gray-500">per {{ $product->unit }}</span>
                 </div>
                 

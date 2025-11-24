@@ -53,8 +53,8 @@
 
                                 <!-- Price -->
                                 <div class="text-right">
-                                    <p class="text-sm text-gray-500">${{ number_format($product->price, 2) }} each</p>
-                                    <p class="text-lg font-bold text-gray-900">${{ number_format($product->subtotal, 2) }}</p>
+                                    <p class="text-sm text-gray-500">₹{{ number_format($product->price, 2) }} each</p>
+                                    <p class="text-lg font-bold text-gray-900">₹{{ number_format($product->subtotal, 2) }}</p>
                                 </div>
 
                                 <!-- Remove Button -->
@@ -81,11 +81,11 @@
                 <div class="space-y-3 mb-6">
                     <div class="flex justify-between text-gray-600">
                         <span>Subtotal ({{ $products->count() }} items)</span>
-                        <span>${{ number_format($total, 2) }}</span>
+                        <span>₹{{ number_format($total, 2) }}</span>
                     </div>
                     <div class="flex justify-between text-gray-600">
                         <span>Tax (0%)</span>
-                        <span>$0.00</span>
+                        <span>₹0.00</span>
                     </div>
                     <div class="flex justify-between text-gray-600">
                         <span>Shipping</span>
@@ -93,7 +93,7 @@
                     </div>
                     <div class="border-t pt-3 flex justify-between text-xl font-bold text-gray-900">
                         <span>Total</span>
-                        <span>${{ number_format($total, 2) }}</span>
+                        <span>₹{{ number_format($total, 2) }}</span>
                     </div>
                 </div>
 

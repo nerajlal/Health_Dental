@@ -56,12 +56,12 @@
         <div class="bg-white rounded-lg shadow p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
-                    <i class="fas fa-dollar-sign text-white text-2xl"></i>
+                    <i class="fas fa-indian-rupee-sign text-white text-2xl"></i>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
                         <dt class="text-sm font-medium text-gray-500 truncate">Total Spent</dt>
-                        <dd class="text-2xl font-bold text-gray-900">${{ number_format($stats['total_spent'], 2) }}</dd>
+                        <dd class="text-2xl font-bold text-gray-900">₹{{ number_format($stats['total_spent'], 2) }}</dd>
                     </dl>
                 </div>
             </div>
@@ -111,7 +111,7 @@
                             <a href="{{ route('clinic.orders.show', $order) }}">#{{ $order->id }}</a>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->items->count() }} items</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${{ number_format($order->total_amount, 2) }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">₹{{ number_format($order->total_amount, 2) }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                 @if($order->status == 'delivered') bg-green-100 text-green-800
