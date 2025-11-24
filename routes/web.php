@@ -49,6 +49,14 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     
     // Distributor Management
     Route::resource('distributors', AdminDistributor::class);
+
+    // Clinic Partner Request Approvals
+    Route::post('/clinics/approve-request/{id}', [AdminClinic::class, 'approveRequest'])->name('clinics.approve-request');
+    Route::post('/clinics/reject-request/{id}', [AdminClinic::class, 'rejectRequest'])->name('clinics.reject-request');
+
+    // Distributor Partner Request Approvals
+    Route::post('/distributors/approve-request/{id}', [AdminDistributor::class, 'approveRequest'])->name('distributors.approve-request');
+    Route::post('/distributors/reject-request/{id}', [AdminDistributor::class, 'rejectRequest'])->name('distributors.reject-request');
     
     // Product Management
     Route::get('/products', [AdminProduct::class, 'index'])->name('products.index');

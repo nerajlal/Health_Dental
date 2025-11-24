@@ -16,14 +16,76 @@ class DistributorController extends Controller
         $distributors = User::where('role', 'distributor')
             ->withCount('products')
             ->orderBy('created_at', 'desc')
-            ->paginate(20);
+            ->paginate(10);
 
-        return view('admin.distributors.index', compact('distributors'));
+        // Get pending distributor partner requests
+        $pendingRequests = \App\Models\PartnerRequest::where('type', 'distributor')
+            ->where('status', 'pending')
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        return view('admin.distributors.index', compact('distributors', 'pendingRequests'));
     }
 
     public function create()
     {
         return view('admin.distributors.create');
+    }
+
+    public function approveRequest($id)
+    {
+        $request = \App\Models\PartnerRequest::findOrFail($id);
+        
+        if ($request->status !== 'pending') {
+            return redirect()->back()->with('error', 'This request has already been processed.');
+        }
+
+        // Create user account
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->business_address,
+            'city' => $request->city,
+            'state' => $request->state,
+            'zip_code' => $request->zip_code,
+            'business_registration' => $request->license_number,
+            'role' => 'distributor',
+            'is_active' => true,
+            'password' => \Hash::make('password123'), // Default password
+        ]);
+
+        // Update request status
+        $request->update([
+            'status' => 'approved',
+            'reviewed_at' => now(),
+            'reviewed_by' => auth()->id(),
+            'admin_notes' => 'Approved and account created',
+        ]);
+
+        return redirect()->back()->with('success', 'Distributor approved! Default password: password123 (User should change this on first login)');
+    }
+
+    public function rejectRequest(Request $request, $id)
+    {
+        $partnerRequest = \App\Models\PartnerRequest::findOrFail($id);
+        
+        if ($partnerRequest->status !== 'pending') {
+            return redirect()->back()->with('error', 'This request has already been processed.');
+        }
+
+        $validated = $request->validate([
+            'admin_notes' => 'required|string|max:500',
+        ]);
+
+        $partnerRequest->update([
+            'status' => 'rejected',
+            'reviewed_at' => now(),
+            'reviewed_by' => auth()->id(),
+            'admin_notes' => $validated['admin_notes'],
+        ]);
+
+        return redirect()->back()->with('success', 'Distributor request rejected.');
     }
 
     public function store(Request $request)
