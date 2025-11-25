@@ -56,12 +56,16 @@
         <div class="bg-white rounded-lg shadow p-6">
             <div class="flex items-center">
                 <div class="flex-shrink-0 bg-purple-500 rounded-md p-3">
-                    <i class="fas fa-indian-rupee-sign text-white text-2xl"></i>
+                    <i class="fas fa-rupee-sign text-white text-2xl"></i>
                 </div>
                 <div class="ml-5 w-0 flex-1">
                     <dl>
                         <dt class="text-sm font-medium text-gray-500 truncate">Total Revenue</dt>
-                        <dd class="text-2xl font-bold text-gray-900">₹{{ number_format($stats['total_revenue'], 2) }}</dd>
+                        <dd class="text-2xl font-bold text-gray-900">
+                            ₹{{ number_format($orderItems->sum(function($item) {
+                                return $item->quantity * $item->product->base_price;
+                            }), 2) }}
+                        </dd>
                     </dl>
                 </div>
             </div>
@@ -104,6 +108,7 @@
                         </div>
                         <div class="text-left sm:text-right w-full sm:w-auto">
                             <p class="text-lg font-bold text-gray-900">₹{{ number_format($product->base_price, 2) }}</p>
+
                             @if($product->status == 'pending')
                                 <span class="text-xs text-yellow-600">
                                     <i class="fas fa-clock"></i> Pending
@@ -141,7 +146,7 @@
                     <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 bg-gray-50 rounded-lg">
                         <div class="flex-1 w-full sm:w-auto mb-2 sm:mb-0">
                             <h3 class="font-semibold text-gray-900">{{ $product->name }}</h3>
-                            <p class="text-sm text-gray-500">${{ number_format($product->base_price, 2) }} per {{ $product->unit }}</p>
+                            <p class="text-sm text-gray-500">₹{{ number_format($product->base_price, 2) }} per {{ $product->unit }}</p>
                         </div>
                         <div class="text-left sm:text-right w-full sm:w-auto">
                             <p class="text-lg font-bold text-green-600">{{ $product->order_items_sum_quantity ?? 0 }}</p>
@@ -158,7 +163,7 @@
 
     <!-- Recent Bulk Orders -->
     @if(isset($recentBulkOrders) && $recentBulkOrders->count() > 0)
-    <!-- <div class="bg-white rounded-lg shadow mt-8">
+    <div class="bg-white rounded-lg shadow mt-8">
         <div class="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 class="text-xl font-semibold text-gray-900">Recent Bulk Orders</h2>
             <a href="{{ route('distributor.orders.bulk') }}" class="text-blue-600 hover:text-blue-800 text-sm font-medium">View All</a>
@@ -168,7 +173,7 @@
                 <thead class="bg-gray-50">
                     <tr>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Amount</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Your Earnings</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
@@ -176,12 +181,17 @@
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
                     @foreach($recentBulkOrders as $bulkOrder)
+                    @php
+                        $distributorEarnings = $bulkOrder->items->sum(function($item) {
+                            return $item->total_quantity * $item->product->base_price;
+                        });
+                    @endphp
                     <tr>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
                             #{{ $bulkOrder->id }}
                         </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${{ number_format($bulkOrder->total_amount, 2) }}
+                        <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-green-600">
+                            ₹{{ number_format($distributorEarnings, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -205,7 +215,7 @@
                 </tbody>
             </table>
         </div>
-    </div> -->
+    </div>
     @endif
 </div>
 @endsection

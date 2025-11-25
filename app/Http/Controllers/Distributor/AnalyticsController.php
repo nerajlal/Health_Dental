@@ -15,17 +15,21 @@ class AnalyticsController extends Controller
     {
         $distributor = auth()->user();
         
-        // Date filter
-        $startDate = $request->start_date ?? now()->subMonth()->format('Y-m-d');
-        $endDate = $request->end_date ?? now()->format('Y-m-d');
+        // Date filter - DEFAULT to ALL TIME if not specified
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
         $productId = $request->product_id;
 
-        // Build query for order items with delivered orders only
+        // Build query
         $query = OrderItem::whereHas('product', function($q) use ($distributor) {
             $q->where('distributor_id', $distributor->id);
         })->whereHas('order', function($q) use ($startDate, $endDate) {
-            $q->where('status', 'delivered')
-              ->whereBetween('created_at', [$startDate, $endDate]);
+            $q->where('status', '!=', 'pending');
+            
+            // Only apply date filter if dates are provided
+            if ($startDate && $endDate) {
+                $q->whereBetween('created_at', [$startDate, $endDate]);
+            }
         });
 
         // Apply product filter
@@ -37,7 +41,7 @@ class AnalyticsController extends Controller
             ->orderBy('created_at', 'desc')
             ->paginate(50);
 
-        // Calculate summary statistics (distributor earnings only)
+        // Calculate summary
         $summary = $this->calculateSummary($distributor, $startDate, $endDate, $productId);
 
         // Get products for filter
@@ -60,17 +64,21 @@ class AnalyticsController extends Controller
         $query = OrderItem::whereHas('product', function($q) use ($distributor) {
             $q->where('distributor_id', $distributor->id);
         })->whereHas('order', function($q) use ($startDate, $endDate) {
-            $q->where('status', 'delivered')
-              ->whereBetween('created_at', [$startDate, $endDate]);
+            $q->where('status', '!=', 'pending');
+            
+            // Only apply date filter if dates are provided
+            if ($startDate && $endDate) {
+                $q->whereBetween('created_at', [$startDate, $endDate]);
+            }
         });
 
         if ($productId) {
             $query->where('product_id', $productId);
         }
 
-        $items = $query->with('product')->get();
+        $items = $query->with(['product', 'order'])->get();
 
-        // Distributor only sees their earnings (base_price * quantity)
+        // Calculate earnings
         $totalEarnings = $items->sum(function($item) {
             return $item->quantity * $item->product->base_price;
         });
@@ -91,10 +99,9 @@ class AnalyticsController extends Controller
     public function productAnalysis(Request $request)
     {
         $distributor = auth()->user();
-        $startDate = $request->start_date ?? now()->subMonth()->format('Y-m-d');
-        $endDate = $request->end_date ?? now()->format('Y-m-d');
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
 
-        // Get product-wise sales analysis
         $productStats = OrderItem::select(
                 'product_id',
                 DB::raw('SUM(quantity) as total_quantity'),
@@ -104,14 +111,18 @@ class AnalyticsController extends Controller
                 $q->where('distributor_id', $distributor->id);
             })
             ->whereHas('order', function($q) use ($startDate, $endDate) {
-                $q->where('status', 'delivered')
-                  ->whereBetween('created_at', [$startDate, $endDate]);
+                $q->where('status', '!=', 'pending');
+                
+                // Only apply date filter if provided
+                if ($startDate && $endDate) {
+                    $q->whereBetween('created_at', [$startDate, $endDate]);
+                }
             })
             ->with('product')
             ->groupBy('product_id')
             ->get();
 
-        // Calculate earnings for each product
+        // Calculate earnings
         $productStats = $productStats->map(function($stat) {
             $stat->total_earnings = $stat->total_quantity * $stat->product->base_price;
             return $stat;
@@ -123,10 +134,9 @@ class AnalyticsController extends Controller
     public function clinicAnalysis(Request $request)
     {
         $distributor = auth()->user();
-        $startDate = $request->start_date ?? now()->subMonth()->format('Y-m-d');
-        $endDate = $request->end_date ?? now()->format('Y-m-d');
+        $startDate = $request->start_date;
+        $endDate = $request->end_date;
 
-        // Get clinic-wise analysis
         $clinicStats = OrderItem::select(
                 'orders.clinic_id',
                 DB::raw('SUM(order_items.quantity) as total_quantity'),
@@ -136,14 +146,15 @@ class AnalyticsController extends Controller
             ->whereHas('product', function($q) use ($distributor) {
                 $q->where('distributor_id', $distributor->id);
             })
-            ->where('orders.status', 'delivered')
-            ->whereBetween('orders.created_at', [$startDate, $endDate])
+            ->where('orders.status', '!=', 'pending')
+            ->when($startDate && $endDate, function($q) use ($startDate, $endDate) {
+                $q->whereBetween('orders.created_at', [$startDate, $endDate]);
+            })
             ->groupBy('orders.clinic_id')
             ->get();
 
         // Calculate earnings per clinic
-        $clinicStats = $clinicStats->map(function($stat) use ($distributor) {
-            // Get clinic info
+        $clinicStats = $clinicStats->map(function($stat) use ($distributor, $startDate, $endDate) {
             $orderItem = OrderItem::whereHas('product', function($q) use ($distributor) {
                 $q->where('distributor_id', $distributor->id);
             })->whereHas('order', function($q) use ($stat) {
@@ -152,13 +163,15 @@ class AnalyticsController extends Controller
             
             $stat->clinic = $orderItem->order->clinic ?? null;
             
-            // Calculate total earnings from this clinic
             $items = OrderItem::whereHas('product', function($q) use ($distributor) {
                 $q->where('distributor_id', $distributor->id);
             })->whereHas('order', function($q) use ($stat, $startDate, $endDate) {
                 $q->where('clinic_id', $stat->clinic_id)
-                  ->where('status', 'delivered')
-                  ->whereBetween('created_at', [$startDate, $endDate]);
+                  ->where('status', '!=', 'pending');
+                  
+                if ($startDate && $endDate) {
+                    $q->whereBetween('created_at', [$startDate, $endDate]);
+                }
             })->with('product')->get();
 
             $stat->total_earnings = $items->sum(fn($item) => $item->quantity * $item->product->base_price);
