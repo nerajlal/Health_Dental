@@ -34,7 +34,7 @@
         $pendingCount = $requests->where('status', 'approved')->count();
         $fulfilledCount = $requests->where('status', 'fulfilled')->count();
     @endphp
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+    <!-- <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-6">
             <div class="flex items-center justify-between">
                 <div>
@@ -53,7 +53,7 @@
                 <i class="fas fa-check-circle text-green-300 text-4xl"></i>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Requests Table -->
     <div class="bg-white rounded-lg shadow overflow-hidden">

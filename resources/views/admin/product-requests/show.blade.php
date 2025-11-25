@@ -119,21 +119,6 @@
                 <p class="text-yellow-800">{{ $productRequest->admin_notes }}</p>
             </div>
             @endif
-
-            <!-- Approve Button -->
-            @if($productRequest->status == 'pending' || $productRequest->status == 'reviewing')
-            <div class="bg-white rounded-lg shadow p-6">
-                <form action="{{ route('admin.product-requests.approve', $productRequest) }}" method="POST">
-                    @csrf
-                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-lg">
-                        <i class="fas fa-check-circle mr-2"></i>Approve Request
-                    </button>
-                    <p class="text-sm text-gray-600 text-center mt-3">
-                        Once approved, all distributors will be able to see and fulfill this request
-                    </p>
-                </form>
-            </div>
-            @endif
         </div>
 
         <!-- Sidebar -->
@@ -182,9 +167,24 @@
             </div>
             @endif
 
+            <!-- Approve Button - Now in Sidebar -->
+            @if($productRequest->status == 'pending' || $productRequest->status == 'reviewing')
+            <div class="bg-white rounded-lg shadow p-6">
+                <form action="{{ route('admin.product-requests.approve', $productRequest) }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-lg">
+                        <i class="fas fa-check-circle mr-2"></i>Approve 
+                    </button>
+                    <p class="text-sm text-gray-600 text-center mt-3">
+                        Once approved, all distributors will be able to see and fulfill this request
+                    </p>
+                </form>
+            </div>
+            @endif
+
             <!-- Quick Actions -->
             @if($productRequest->status == 'approved')
-            <div class="bg-white rounded-lg shadow p-6">
+            <!-- <div class="bg-white rounded-lg shadow p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Quick Actions</h3>
                 <form action="{{ route('admin.product-requests.update-status', $productRequest) }}" method="POST">
                     @csrf
@@ -194,7 +194,7 @@
                         <i class="fas fa-check-double mr-2"></i>Mark as Fulfilled
                     </button>
                 </form>
-            </div>
+            </div> -->
             @endif
         </div>
     </div>

@@ -110,17 +110,7 @@
             </div>
             @endif
 
-            <!-- Actions -->
-            @if($productRequest->status == 'approved')
-            <div class="bg-white rounded-lg shadow p-6">
-                <h2 class="text-xl font-semibold text-gray-900 mb-4">Fulfill Request</h2>
-                <p class="text-gray-600 mb-6">You can fulfill this request by creating a new product in your catalog.</p>
-                
-                <a href="{{ route('distributor.product-requests.create-product', $productRequest) }}" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
-                    <i class="fas fa-plus-circle mr-2"></i>Create Product & Fulfill Request
-                </a>
-            </div>
-            @endif
+            
 
             @if($productRequest->status == 'fulfilled')
             <div class="bg-green-50 border border-green-200 rounded-lg p-6">
@@ -158,8 +148,20 @@
                 </div>
             </div>
 
+            <!-- Actions -->
+            @if($productRequest->status == 'approved')
+            <div class="bg-white rounded-lg shadow p-6">
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Fulfill Request</h2>
+                <p class="text-gray-600 mb-6">You can fulfill this request by creating a new product.</p>
+                
+                <a href="{{ route('distributor.products.create') }}" class="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
+                    <i class="fas fa-plus-circle mr-2"></i>Create Product
+                </a>
+            </div>
+            @endif
+
             <!-- Timeline -->
-            <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
+            <!-- <div class="bg-gray-50 border border-gray-200 rounded-lg p-6">
                 <h3 class="text-lg font-semibold text-gray-900 mb-4">Timeline</h3>
                 <div class="space-y-3">
                     <div class="flex items-start">
@@ -196,7 +198,7 @@
                     </div>
                     @endif
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>
