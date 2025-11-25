@@ -87,15 +87,27 @@
                     </div>
 
                     <!-- Individual Buy Now Button -->
+                    <form action="#" method="POST" class="flex items-center justify-between">
+                            @csrf
+                        <div class="text-sm text-gray-600">
+                                <!-- <i class="fas fa-info-circle mr-1"></i>
+                                You can buy this item separately or checkout all items together -->
+                        </div>
+                        <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition">
+                            <i class="fas fa-bolt mr-2"></i>Buy Now
+                        </button>
+                    </form>
+                    
+                    <!-- Add To Bucket Button -->
                     <div class="mt-4 pt-4 border-t border-gray-200">
-                        <form action="{{ route('clinic.orders.checkout-single', $product) }}" method="POST" class="flex items-center justify-between">
+                        <form action="#" method="POST" class="flex items-center justify-between">
                             @csrf
                             <div class="text-sm text-gray-600">
                                 <i class="fas fa-info-circle mr-1"></i>
-                                You can buy this item separately or checkout all items together
+                                You can add this item to bag so you dont want to add to cart eachtime.
                             </div>
-                            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-lg font-medium transition">
-                                <i class="fas fa-bolt mr-2"></i>Buy Now
+                            <button class="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-medium transition">
+                                <i class="fas fa-shopping-basket mr-2"></i>Add To Bag
                             </button>
                         </form>
                     </div>
