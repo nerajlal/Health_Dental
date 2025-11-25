@@ -10,7 +10,7 @@
             <p class="mt-2 text-gray-600">Manage your product catalog</p>
         </div>
         <a href="{{ route('distributor.products.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
-            <i class="fas fa-plus mr-2"></i>Add New Product
+            <i class="fas fa-plus mr-2"></i>Add Product
         </a>
     </div>
 
@@ -172,9 +172,9 @@
                         @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                        <a href="{{ route('distributor.products.edit', $product) }}" class="text-blue-600 hover:text-blue-900 mr-3">
+                        <!-- <a href="{{ route('distributor.products.edit', $product) }}" class="text-blue-600 hover:text-blue-900 mr-3">
                             <i class="fas fa-edit"></i> Edit
-                        </a>
+                        </a> -->
                         <form action="{{ route('distributor.products.destroy', $product) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')

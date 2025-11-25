@@ -10,7 +10,7 @@
             <p class="mt-2 text-gray-600">Track orders and mark items as shipped to admin</p>
         </div>
         <a href="{{ route('distributor.orders.bulk') }}" class="bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg font-medium">
-            <i class="fas fa-boxes mr-2"></i>View Bulk Orders
+            <i class="fas fa-boxes mr-2"></i>Bulk Orders
         </a>
     </div>
 

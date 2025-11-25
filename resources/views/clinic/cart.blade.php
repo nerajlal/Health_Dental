@@ -29,7 +29,7 @@
                         <div class="flex-1 text-center sm:text-left w-full sm:w-auto">
                             <h3 class="text-lg font-semibold text-gray-900">{{ $product->name }}</h3>
                             <p class="text-sm text-gray-500">{{ $product->distributor->name }}</p>
-                            <p class="text-lg font-bold text-green-600 mt-2">${{ number_format($product->display_price, 2) }} per {{ $product->unit }}</p>
+                            <p class="text-lg font-bold text-green-600 mt-2">₹{{ number_format($product->display_price, 2) }} per {{ $product->unit }}</p>
                         </div>
 
                         <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full sm:w-auto justify-between sm:justify-end">
@@ -45,7 +45,7 @@
 
                             <div class="text-center sm:text-right">
                                 <p class="text-sm text-gray-500">Subtotal</p>
-                                <p class="text-lg font-bold text-gray-900">${{ number_format($product->subtotal, 2) }}</p>
+                                <p class="text-lg font-bold text-gray-900">₹{{ number_format($product->subtotal, 2) }}</p>
                             </div>
 
                             <form action="{{ route('clinic.cart.remove', $product) }}" method="POST">
@@ -70,16 +70,16 @@
                 <div class="space-y-3 mb-4">
                     <div class="flex justify-between text-gray-600">
                         <span>Items ({{ count($products) }})</span>
-                        <span>${{ number_format($total, 2) }}</span>
+                        <span>₹{{ number_format($total, 2) }}</span>
                     </div>
                     <div class="flex justify-between text-gray-600">
                         <span>Tax</span>
-                        <span>$0.00</span>
+                        <span>₹0.00</span>
                     </div>
                     <div class="border-t pt-3">
                         <div class="flex justify-between text-lg font-bold text-gray-900">
                             <span>Total</span>
-                            <span>${{ number_format($total, 2) }}</span>
+                            <span>₹{{ number_format($total, 2) }}</span>
                         </div>
                     </div>
                 </div>
