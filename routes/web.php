@@ -79,6 +79,13 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
     Route::get('/margins', [App\Http\Controllers\Admin\MarginController::class, 'index'])->name('margin');
     Route::get('/margins/product-analysis', [App\Http\Controllers\Admin\MarginController::class, 'productAnalysis'])->name('margin.products');
     Route::get('/margins/distributor-analysis', [App\Http\Controllers\Admin\MarginController::class, 'distributorAnalysis'])->name('margin.distributors');
+
+    // Product Requests
+    Route::get('/product-requests', [App\Http\Controllers\Admin\ProductRequestController::class, 'index'])->name('product-requests.index');
+    Route::get('/product-requests/{productRequest}', [App\Http\Controllers\Admin\ProductRequestController::class, 'show'])->name('product-requests.show');
+    Route::post('/product-requests/{productRequest}/approve', [App\Http\Controllers\Admin\ProductRequestController::class, 'approve'])->name('product-requests.approve');
+    Route::post('/product-requests/{productRequest}/reject', [App\Http\Controllers\Admin\ProductRequestController::class, 'reject'])->name('product-requests.reject');
+    Route::put('/product-requests/{productRequest}/status', [App\Http\Controllers\Admin\ProductRequestController::class, 'updateStatus'])->name('product-requests.update-status');
 });
 
 // Clinic Routes
@@ -88,6 +95,11 @@ Route::middleware(['auth'])->prefix('clinic')->name('clinic.')->group(function (
     // Products
     Route::get('/products', [ClinicProduct::class, 'index'])->name('products.index');
     Route::get('/products/{product}', [ClinicProduct::class, 'show'])->name('products.show');
+
+    // Product Requests
+    Route::get('/product-requests', [App\Http\Controllers\Clinic\ProductRequestController::class, 'index'])->name('product-requests.index');
+    Route::post('/product-requests', [App\Http\Controllers\Clinic\ProductRequestController::class, 'store'])->name('product-requests.store');
+    Route::get('/product-requests/{productRequest}', [App\Http\Controllers\Clinic\ProductRequestController::class, 'show'])->name('product-requests.show');
 
     // Single product checkout from cart
     Route::post('/orders/checkout-single/{product}', [App\Http\Controllers\Clinic\OrderController::class, 'checkoutSingle'])->name('orders.checkout-single');
@@ -126,5 +138,12 @@ Route::middleware(['auth'])->prefix('distributor')->name('distributor.')->group(
     // Mark order items as shipped
     Route::put('/order-items/{orderItem}/mark-shipped', [DistributorOrder::class, 'markAsShipped'])->name('order-items.mark-shipped');
     Route::put('/order-items/{orderItem}/mark-not-shipped', [DistributorOrder::class, 'markAsNotShipped'])->name('order-items.mark-not-shipped');
+
+    // Product Requests
+    Route::get('/product-requests', [App\Http\Controllers\Distributor\ProductRequestController::class, 'index'])->name('product-requests.index');
+    Route::get('/product-requests/{productRequest}', [App\Http\Controllers\Distributor\ProductRequestController::class, 'show'])->name('product-requests.show');
+    Route::get('/product-requests/{productRequest}/create-product', [App\Http\Controllers\Distributor\ProductRequestController::class, 'createProduct'])->name('product-requests.create-product');
+    Route::post('/product-requests/{productRequest}/store-product', [App\Http\Controllers\Distributor\ProductRequestController::class, 'storeProduct'])->name('product-requests.store-product');
+    Route::post('/product-requests/{productRequest}/fulfill', [App\Http\Controllers\Distributor\ProductRequestController::class, 'fulfill'])->name('product-requests.fulfill');
 });
 
