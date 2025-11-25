@@ -82,6 +82,16 @@
                 <div class="hidden sm:ml-6 sm:flex sm:items-center">
                     <div class="ml-3 relative">
                         <div class="flex items-center space-x-4">
+                            @if(auth()->user()->role == 'clinic')
+                                <a href="{{ route('clinic.cart') }}" class="relative text-gray-500 hover:text-gray-700">
+                                    <i class="fas fa-shopping-cart text-xl"></i>
+                                    @if(count(session('cart', [])) > 0)
+                                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                            {{ count(session('cart', [])) }}
+                                        </span>
+                                    @endif
+                                </a>
+                            @endif
                             <span class="text-gray-700">{{ auth()->user()->name }}</span>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
