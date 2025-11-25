@@ -95,11 +95,13 @@
                     <div class="ml-3 relative">
                         <div class="flex items-center space-x-4">
                             @if(auth()->user()->role == 'clinic')
-                                <a href="#" class="relative text-gray-500 hover:text-gray-700">
+                                <a href="{{ route('clinic.bag.index') }}" class="relative text-gray-500 hover:text-gray-700">
                                     <i class="fas fa-shopping-basket text-xl"></i>
-                                    <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                                        
-                                    </span>
+                                    @if($bagCount > 0)
+                                        <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+                                            {{ $bagCount }}
+                                        </span>
+                                    @endif
                                 </a>
                                 <a href="{{ route('clinic.cart') }}" class="relative text-gray-500 hover:text-gray-700">
                                     <i class="fas fa-shopping-cart text-xl"></i>
@@ -124,10 +126,13 @@
                 <div class="flex items-center sm:hidden">
                     @if(auth()->user()->role == 'clinic')
 
-                        <a href="#" class="relative text-gray-500 hover:text-gray-700">
+                        <a href="{{ route('clinic.bag.index') }}" class="relative text-gray-500 hover:text-gray-700 p-2">
                             <i class="fas fa-shopping-basket text-xl"></i>
-                            <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
-                            </span>
+                            @if($bagCount > 0)
+                                <span class="absolute top-0 right-0 bg-red-500 text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
+                                    {{ $bagCount }}
+                                </span>
+                            @endif
                         </a>
 
                         <a href="{{ route('clinic.cart') }}" class="relative text-gray-500 hover:text-gray-700 p-2">
