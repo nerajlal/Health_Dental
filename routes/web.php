@@ -88,6 +88,9 @@ Route::middleware(['auth'])->prefix('clinic')->name('clinic.')->group(function (
     // Products
     Route::get('/products', [ClinicProduct::class, 'index'])->name('products.index');
     Route::get('/products/{product}', [ClinicProduct::class, 'show'])->name('products.show');
+
+    // Single product checkout from cart
+    Route::post('/orders/checkout-single/{product}', [App\Http\Controllers\Clinic\OrderController::class, 'checkoutSingle'])->name('orders.checkout-single');
     
     // Cart & Orders
     Route::get('/cart', [ClinicOrder::class, 'cart'])->name('cart');

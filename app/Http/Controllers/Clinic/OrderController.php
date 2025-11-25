@@ -162,6 +162,67 @@ class OrderController extends Controller
             ->with('success', "Successfully created {$ordersCreated} order(s)! Waiting for admin approval.");
     }
 
+    public function checkoutSingle(Request $request, Product $product)
+    {
+        $cart = session()->get('cart', []);
+        
+        // Check if product is in cart
+        if (!isset($cart[$product->id])) {
+            return redirect()->route('clinic.cart')->with('error', 'Product not found in cart!');
+        }
+        
+        $clinic = auth()->user();
+        
+        // Check if product is still active and in stock
+        if (!$product->is_active) {
+            return redirect()->route('clinic.cart')->with('error', 'This product is no longer available.');
+        }
+        
+        $quantity = is_array($cart[$product->id]) 
+            ? $cart[$product->id]['quantity'] 
+            : (int)$cart[$product->id];
+        
+        if ($quantity > $product->stock_quantity) {
+            return redirect()->route('clinic.cart')->with('error', 'Not enough stock available.');
+        }
+        
+        // Get custom pricing if exists
+        $customPrice = CustomPricing::where('clinic_id', $clinic->id)
+            ->where('product_id', $product->id)
+            ->first();
+        
+        if ($customPrice) {
+            $price = $customPrice->custom_price;
+        } else {
+            $price = $product->base_price + $product->admin_margin;
+        }
+        
+        $totalAmount = $price * $quantity;
+        
+        // Create order
+        $order = Order::create([
+            'clinic_id' => $clinic->id,
+            'distributor_id' => $product->distributor_id,
+            'total_amount' => $totalAmount,
+            'status' => 'pending',
+        ]);
+        
+        // Create order item
+        OrderItem::create([
+            'order_id' => $order->id,
+            'product_id' => $product->id,
+            'quantity' => $quantity,
+            'price' => $price,
+        ]);
+        
+        // Remove this product from cart
+        unset($cart[$product->id]);
+        session()->put('cart', $cart);
+        
+        return redirect()->route('clinic.orders.show', $order)
+            ->with('success', 'Order placed successfully! Waiting for admin approval.');
+    }
+
     public function addToCart(Request $request, Product $product)
     {
         $validated = $request->validate([
