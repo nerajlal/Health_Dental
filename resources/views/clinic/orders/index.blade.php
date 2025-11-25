@@ -10,7 +10,7 @@
             <p class="mt-2 text-gray-600">Track and manage your orders</p>
         </div>
         <a href="{{ route('clinic.products.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
-            <i class="fas fa-plus mr-2"></i>Create New Order
+            <i class="fas fa-plus mr-2"></i>Create Order
         </a>
     </div>
 
@@ -19,7 +19,7 @@
         <div class="flex items-center space-x-4 overflow-x-auto">
             <a href="{{ route('clinic.orders.index') }}" 
                class="px-4 py-2 rounded-lg font-medium {{ !request('status') ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
-                All Orders
+                All 
             </a>
             <a href="{{ route('clinic.orders.index', ['status' => 'pending']) }}" 
                class="px-4 py-2 rounded-lg font-medium {{ request('status') == 'pending' ? 'bg-yellow-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
