@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\OrderController as AdminOrder;
 use App\Http\Controllers\Clinic\DashboardController as ClinicDashboard;
 use App\Http\Controllers\Clinic\ProductController as ClinicProduct;
 use App\Http\Controllers\Clinic\OrderController as ClinicOrder;
+use App\Http\Controllers\Clinic\BagController as ClinicBag;
 use App\Http\Controllers\Distributor\DashboardController as DistributorDashboard;
 use App\Http\Controllers\Distributor\ProductController as DistributorProduct;
 use App\Http\Controllers\Distributor\OrderController as DistributorOrder;
@@ -114,6 +115,12 @@ Route::middleware(['auth'])->prefix('clinic')->name('clinic.')->group(function (
     Route::get('/orders/create', [ClinicOrder::class, 'create'])->name('orders.create');
     Route::post('/orders', [ClinicOrder::class, 'store'])->name('orders.store');
     Route::get('/orders/{order}', [ClinicOrder::class, 'show'])->name('orders.show');
+
+    // Bag Routes
+    Route::get('/bag', [ClinicBag::class, 'index'])->name('bag.index');
+    Route::post('/bag/{product}', [ClinicBag::class, 'add'])->name('bag.add');
+    Route::put('/bag/{product}', [ClinicBag::class, 'update'])->name('bag.update');
+    Route::delete('/bag/{product}', [ClinicBag::class, 'remove'])->name('bag.remove');
 });
 
 // Distributor Routes
