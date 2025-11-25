@@ -75,7 +75,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-bold text-gray-900">${{ number_format($order->total_amount, 2) }}</div>
+                            <div class="text-sm font-bold text-gray-900">₹{{ number_format($order->total_amount, 2) }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">{{ $order->created_at->format('M d, Y') }}</div>
@@ -150,7 +150,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-bold text-gray-900">${{ number_format($order->total_amount, 2) }}</div>
+                            <div class="text-sm font-bold text-gray-900">₹{{ number_format($order->total_amount, 2) }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 py-1 text-xs font-semibold rounded-full 
@@ -224,7 +224,7 @@
                             <div class="text-sm text-gray-900">{{ $order->items->count() }} items</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-bold text-gray-900">${{ number_format($order->total_amount, 2) }}</div>
+                            <div class="text-sm font-bold text-gray-900">₹{{ number_format($order->total_amount, 2) }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <div class="text-sm text-gray-900">{{ $order->updated_at->format('M d, Y') }}</div>

@@ -55,10 +55,10 @@
                             {{ $product->total_quantity ?? 0 }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                            ${{ number_format($product->total_revenue ?? 0, 2) }}
+                            ₹{{ number_format($product->total_revenue ?? 0, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${{ number_format($product->base_price, 2) }}
+                            ₹{{ number_format($product->base_price, 2) }}
                         </td>
                     </tr>
                     @empty
@@ -86,7 +86,7 @@
                             <p class="text-sm text-gray-500">{{ $clinic->orders_count }} orders</p>
                         </div>
                         <div class="text-right">
-                            <p class="font-bold text-gray-900">${{ number_format($clinic->total_spent ?? 0, 2) }}</p>
+                            <p class="font-bold text-gray-900">₹{{ number_format($clinic->total_spent ?? 0, 2) }}</p>
                         </div>
                     </div>
                     @empty

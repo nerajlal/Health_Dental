@@ -17,7 +17,7 @@
                 <h2 class="text-xl font-semibold text-blue-900">
                     {{ $pendingOrders->count() }} Pending Orders
                 </h2>
-                <p class="text-blue-700 mt-1">Total Value: ${{ number_format($pendingOrders->sum('total_amount'), 2) }}</p>
+                <p class="text-blue-700 mt-1">Total Value: ₹{{ number_format($pendingOrders->sum('total_amount'), 2) }}</p>
             </div>
             <form action="{{ route('admin.orders.approve-all') }}" method="POST" onsubmit="return confirm('Are you sure you want to approve all pending orders? This will create bulk orders for distributors.')">
                 @csrf
@@ -65,8 +65,8 @@
                             <td class="py-3 text-sm text-gray-900">{{ $orderData['order']->clinic->name }}</td>
                             <td class="py-3 text-sm text-gray-900">{{ $orderData['item']->product->name }}</td>
                             <td class="py-3 text-sm text-gray-900">{{ $orderData['item']->quantity }}</td>
-                            <td class="py-3 text-sm text-gray-900">${{ number_format($orderData['item']->price, 2) }}</td>
-                            <td class="py-3 text-sm font-medium text-gray-900">${{ number_format($orderData['item']->quantity * $orderData['item']->price, 2) }}</td>
+                            <td class="py-3 text-sm text-gray-900">₹{{ number_format($orderData['item']->price, 2) }}</td>
+                            <td class="py-3 text-sm font-medium text-gray-900">₹{{ number_format($orderData['item']->quantity * $orderData['item']->price, 2) }}</td>
                         </tr>
                         @endforeach
                     </tbody>

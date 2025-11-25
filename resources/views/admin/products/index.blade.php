@@ -94,10 +94,10 @@
                         @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
-                        <div class="text-sm text-gray-600">Base: <span class="font-medium text-gray-900">${{ number_format($product->base_price, 2) }}</span></div>
+                        <div class="text-sm text-gray-600">Base: <span class="font-medium text-gray-900">₹{{ number_format($product->base_price, 2) }}</span></div>
                         @if($product->status == 'approved' && $product->admin_margin)
-                        <div class="text-sm text-gray-600">Margin: <span class="font-medium text-green-600">+${{ number_format($product->admin_margin, 2) }}</span></div>
-                        <div class="text-sm text-gray-600">Final: <span class="font-bold text-blue-600">${{ number_format($product->final_price, 2) }}</span></div>
+                        <div class="text-sm text-gray-600">Margin: <span class="font-medium text-green-600">+₹{{ number_format($product->admin_margin, 2) }}</span></div>
+                        <div class="text-sm text-gray-600">Final: <span class="font-bold text-blue-600">₹{{ number_format($product->final_price, 2) }}</span></div>
                         @endif
                         <div class="text-xs text-gray-500">per {{ $product->unit }}</div>
                     </td>

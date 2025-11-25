@@ -73,10 +73,10 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Total Revenue</p>
-                    <p class="text-2xl font-bold text-gray-900">${{ number_format($summary['total_revenue'], 2) }}</p>
+                    <p class="text-2xl font-bold text-gray-900">₹{{ number_format($summary['total_revenue'], 2) }}</p>
                 </div>
                 <div class="bg-green-100 rounded-full p-3">
-                    <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
+                    <i class="fas fa-indian-rupee-sign text-green-600 text-xl"></i>
                 </div>
             </div>
         </div>
@@ -85,7 +85,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Total Cost</p>
-                    <p class="text-2xl font-bold text-gray-900">${{ number_format($summary['total_cost'], 2) }}</p>
+                    <p class="text-2xl font-bold text-gray-900">₹{{ number_format($summary['total_cost'], 2) }}</p>
                 </div>
                 <div class="bg-red-100 rounded-full p-3">
                     <i class="fas fa-receipt text-red-600 text-xl"></i>
@@ -97,7 +97,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Total Profit</p>
-                    <p class="text-2xl font-bold text-green-600">${{ number_format($summary['total_profit'], 2) }}</p>
+                    <p class="text-2xl font-bold text-green-600">₹{{ number_format($summary['total_profit'], 2) }}</p>
                 </div>
                 <div class="bg-blue-100 rounded-full p-3">
                     <i class="fas fa-chart-line text-blue-600 text-xl"></i>
@@ -130,7 +130,7 @@
         </div>
         <div class="bg-white rounded-lg shadow p-6">
             <p class="text-sm text-gray-600">Avg Order Value</p>
-            <p class="text-3xl font-bold text-gray-900">${{ number_format($summary['average_order_value'], 2) }}</p>
+            <p class="text-3xl font-bold text-gray-900">₹{{ number_format($summary['average_order_value'], 2) }}</p>
         </div>
     </div>
 
@@ -188,19 +188,19 @@
                             {{ $item->quantity }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
-                            ${{ number_format($item->product->base_price, 2) }}
+                            ₹{{ number_format($item->product->base_price, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
-                            ${{ number_format($item->price, 2) }}
+                            ₹{{ number_format($item->price, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900">
-                            ${{ number_format($revenue, 2) }}
+                            ₹{{ number_format($revenue, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600">
-                            ${{ number_format($cost, 2) }}
+                            ₹{{ number_format($cost, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-bold text-green-600">
-                            ${{ number_format($profit, 2) }}
+                            ₹{{ number_format($profit, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right">
                             <span class="px-2 py-1 text-xs font-semibold rounded-full 

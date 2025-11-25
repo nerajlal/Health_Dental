@@ -71,11 +71,11 @@
         </div>
         <div class="bg-white rounded-lg shadow p-6">
             <p class="text-sm text-gray-600">Total Revenue</p>
-            <p class="text-3xl font-bold text-green-600">${{ number_format($totalRevenue, 2) }}</p>
+            <p class="text-3xl font-bold text-green-600">₹{{ number_format($totalRevenue, 2) }}</p>
         </div>
         <div class="bg-white rounded-lg shadow p-6">
             <p class="text-sm text-gray-600">Total Profit</p>
-            <p class="text-3xl font-bold text-blue-600">${{ number_format($totalProfit, 2) }}</p>
+            <p class="text-3xl font-bold text-blue-600">₹{{ number_format($totalProfit, 2) }}</p>
         </div>
         <div class="bg-white rounded-lg shadow p-6">
             <p class="text-sm text-gray-600">Avg Margin</p>
@@ -98,7 +98,7 @@
                     <div class="flex items-center justify-between mb-2">
                         <span class="text-2xl font-bold text-gray-400">#{{ $index + 1 }}</span>
                         <span class="text-xs font-semibold px-2 py-1 rounded-full bg-green-100 text-green-800">
-                            ${{ number_format($stat->total_profit, 0) }}
+                            ₹{{ number_format($stat->total_profit, 0) }}
                         </span>
                     </div>
                     <h3 class="font-semibold text-gray-900 mb-1 truncate" title="{{ $stat->product->name }}">
@@ -160,20 +160,20 @@
                             {{ $stat->order_count }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
-                            ${{ number_format($stat->product->base_price, 2) }}
+                            ₹{{ number_format($stat->product->base_price, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right">
-                            <span class="text-blue-600 font-medium">${{ number_format($stat->product->admin_margin, 2) }}</span>
-                            <div class="text-xs text-gray-500">Total: ${{ number_format($stat->admin_margin_total, 2) }}</div>
+                            <span class="text-blue-600 font-medium">₹{{ number_format($stat->product->admin_margin, 2) }}</span>
+                            <div class="text-xs text-gray-500">Total: ₹{{ number_format($stat->admin_margin_total, 2) }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900">
-                            ${{ number_format($stat->total_revenue, 2) }}
+                            ₹{{ number_format($stat->total_revenue, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600">
-                            ${{ number_format($stat->total_cost, 2) }}
+                            ₹{{ number_format($stat->total_cost, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-bold text-green-600">
-                            ${{ number_format($stat->total_profit, 2) }}
+                            ₹{{ number_format($stat->total_profit, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right">
                             <span class="px-3 py-1 text-xs font-semibold rounded-full 
@@ -199,10 +199,10 @@
                         <td class="px-6 py-4 text-sm text-right text-gray-900">{{ number_format($productStats->sum('total_quantity')) }}</td>
                         <td class="px-6 py-4 text-sm text-right text-gray-900">{{ $productStats->sum('order_count') }}</td>
                         <td class="px-6 py-4 text-sm text-right">-</td>
-                        <td class="px-6 py-4 text-sm text-right text-blue-600">${{ number_format($productStats->sum('admin_margin_total'), 2) }}</td>
-                        <td class="px-6 py-4 text-sm text-right text-gray-900">${{ number_format($totalRevenue, 2) }}</td>
-                        <td class="px-6 py-4 text-sm text-right text-red-600">${{ number_format($totalCost, 2) }}</td>
-                        <td class="px-6 py-4 text-sm text-right text-green-600">${{ number_format($totalProfit, 2) }}</td>
+                        <td class="px-6 py-4 text-sm text-right text-blue-600">₹{{ number_format($productStats->sum('admin_margin_total'), 2) }}</td>
+                        <td class="px-6 py-4 text-sm text-right text-gray-900">₹{{ number_format($totalRevenue, 2) }}</td>
+                        <td class="px-6 py-4 text-sm text-right text-red-600">₹{{ number_format($totalCost, 2) }}</td>
+                        <td class="px-6 py-4 text-sm text-right text-green-600">₹{{ number_format($totalProfit, 2) }}</td>
                         <td class="px-6 py-4 text-sm text-right">
                             <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
                                 {{ number_format($avgMargin, 1) }}%

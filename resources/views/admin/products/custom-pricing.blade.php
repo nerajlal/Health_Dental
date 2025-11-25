@@ -22,9 +22,9 @@
                     <div class="ml-3">
                         <h3 class="text-sm font-medium text-blue-900">About Custom Pricing</h3>
                         <div class="mt-2 text-sm text-blue-700">
-                            <p>Base Price: <strong>${{ number_format($product->base_price, 2) }}</strong></p>
+                            <p>Base Price: <strong>₹{{ number_format($product->base_price, 2) }}</strong></p>
                             <p class="mt-1">Default margin: 15%</p>
-                            <p class="mt-1">Default clinic price: <strong>${{ number_format($product->base_price * 1.15, 2) }}</strong></p>
+                            <p class="mt-1">Default clinic price: <strong>₹{{ number_format($product->base_price * 1.15, 2) }}</strong></p>
                         </div>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                     <div>
                         <label for="custom_price" class="block text-sm font-medium text-gray-700 mb-2">Custom Price *</label>
                         <div class="relative">
-                            <span class="absolute left-3 top-2 text-gray-500 font-medium">$</span>
+                            <span class="absolute left-3 top-2 text-gray-500 font-medium">₹</span>
                             <input type="number" name="custom_price" id="custom_price" step="0.01" min="0" required
                                    class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                    placeholder="0.00">
@@ -80,7 +80,7 @@
                         <div class="mt-1 flex flex-col sm:flex-row sm:items-center space-y-1 sm:space-y-0 sm:space-x-4">
                             <span class="text-sm text-gray-500">Custom: <strong class="text-green-600">${{ number_format($pricing->custom_price, 2) }}</strong></span>
                             <span class="text-sm text-gray-400 hidden sm:inline">•</span>
-                            <span class="text-sm text-gray-500">Base: ${{ number_format($product->base_price, 2) }}</span>
+                            <span class="text-sm text-gray-500">Base: ₹{{ number_format($product->base_price, 2) }}</span>
                         </div>
                         @if($pricing->custom_price < $product->base_price)
                         <span class="inline-block mt-2 px-2 py-1 text-xs bg-yellow-100 text-yellow-800 rounded">
@@ -99,9 +99,9 @@
                 </div>
                 @empty
                 <div class="text-center py-8">
-                    <i class="fas fa-dollar-sign text-gray-300 text-4xl mb-3"></i>
+                    <i class="fas fa-indian-rupee-sign text-gray-300 text-4xl mb-3"></i>
                     <p class="text-gray-500">No custom pricing set yet</p>
-                    <p class="text-sm text-gray-400 mt-1">All clinics see the default price: ${{ number_format($product->base_price * 1.15, 2) }}</p>
+                    <p class="text-sm text-gray-400 mt-1">All clinics see the default price: ₹{{ number_format($product->base_price * 1.15, 2) }}</p>
                 </div>
                 @endforelse
             </div>

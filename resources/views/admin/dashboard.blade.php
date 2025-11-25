@@ -91,12 +91,12 @@
     <!-- Revenue Stats -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
         <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Total Revenue</h3>
-            <p class="text-3xl font-bold text-green-600">${{ number_format($stats['total_revenue'], 2) }}</p>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Total Order Revenue</h3>
+            <p class="text-3xl font-bold text-green-600">₹{{ number_format($stats['total_revenue'], 2) }}</p>
         </div>
         <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-900 mb-2">Monthly Revenue</h3>
-            <p class="text-3xl font-bold text-blue-600">${{ number_format($stats['monthly_revenue'], 2) }}</p>
+            <h3 class="text-lg font-semibold text-gray-900 mb-2">Monthly Order Revenue</h3>
+            <p class="text-3xl font-bold text-blue-600">₹{{ number_format($stats['monthly_revenue'], 2) }}</p>
         </div>
     </div>
 
@@ -125,7 +125,7 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{{ $order->clinic->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $order->items->count() }} items</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${{ number_format($order->total_amount, 2) }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">₹{{ number_format($order->total_amount, 2) }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                                 @if($order->status == 'delivered') bg-green-100 text-green-800
@@ -163,7 +163,7 @@
                     </div>
                     <div class="text-right">
                         <p class="text-lg font-bold text-gray-900">{{ $product->total_sold ?? 0 }} sold</p>
-                        <p class="text-sm text-gray-500">${{ number_format($product->base_price, 2) }}</p>
+                        <p class="text-sm text-gray-500">₹{{ number_format($product->base_price, 2) }}</p>
                     </div>
                 </div>
                 @empty

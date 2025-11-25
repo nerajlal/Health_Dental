@@ -61,11 +61,11 @@
         </div>
         <div class="bg-white rounded-lg shadow p-6">
             <p class="text-sm text-gray-600">Total Revenue</p>
-            <p class="text-3xl font-bold text-green-600">${{ number_format($totalRevenue, 2) }}</p>
+            <p class="text-3xl font-bold text-green-600">₹{{ number_format($totalRevenue, 2) }}</p>
         </div>
         <div class="bg-white rounded-lg shadow p-6">
             <p class="text-sm text-gray-600">Total Profit</p>
-            <p class="text-3xl font-bold text-blue-600">${{ number_format($totalProfit, 2) }}</p>
+            <p class="text-3xl font-bold text-blue-600">₹{{ number_format($totalProfit, 2) }}</p>
         </div>
         <div class="bg-white rounded-lg shadow p-6">
             <p class="text-sm text-gray-600">Total Orders</p>
@@ -101,11 +101,11 @@
                     <div class="space-y-2 text-sm">
                         <div class="flex justify-between">
                             <span class="text-gray-600">Revenue:</span>
-                            <span class="font-bold text-green-600">${{ number_format($dist->total_revenue, 2) }}</span>
+                            <span class="font-bold text-green-600">₹{{ number_format($dist->total_revenue, 2) }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600">Profit:</span>
-                            <span class="font-bold text-blue-600">${{ number_format($dist->total_profit, 2) }}</span>
+                            <span class="font-bold text-blue-600">₹{{ number_format($dist->total_profit, 2) }}</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-gray-600">Margin:</span>
@@ -170,13 +170,13 @@
                             {{ $dist->total_orders }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-medium text-gray-900">
-                            ${{ number_format($dist->total_revenue, 2) }}
+                            ₹{{ number_format($dist->total_revenue, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-red-600">
-                            ${{ number_format($dist->total_cost, 2) }}
+                            ₹{{ number_format($dist->total_cost, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-bold text-green-600">
-                            ${{ number_format($dist->total_profit, 2) }}
+                            ₹{{ number_format($dist->total_profit, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right">
                             <span class="px-3 py-1 text-xs font-semibold rounded-full 
@@ -201,9 +201,9 @@
                         <td colspan="4" class="px-6 py-4 text-sm text-gray-900">TOTAL</td>
                         <td class="px-6 py-4 text-sm text-right text-gray-900">{{ number_format($distributorStats->sum('total_quantity')) }}</td>
                         <td class="px-6 py-4 text-sm text-right text-gray-900">{{ $totalOrders }}</td>
-                        <td class="px-6 py-4 text-sm text-right text-gray-900">${{ number_format($totalRevenue, 2) }}</td>
-                        <td class="px-6 py-4 text-sm text-right text-red-600">${{ number_format($totalCost, 2) }}</td>
-                        <td class="px-6 py-4 text-sm text-right text-green-600">${{ number_format($totalProfit, 2) }}</td>
+                        <td class="px-6 py-4 text-sm text-right text-gray-900">₹{{ number_format($totalRevenue, 2) }}</td>
+                        <td class="px-6 py-4 text-sm text-right text-red-600">₹{{ number_format($totalCost, 2) }}</td>
+                        <td class="px-6 py-4 text-sm text-right text-green-600">₹{{ number_format($totalProfit, 2) }}</td>
                         <td class="px-6 py-4 text-sm text-right">
                             <span class="px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-800">
                                 {{ number_format($avgMargin, 1) }}%
@@ -228,7 +228,7 @@
                 <div>
                     <div class="flex justify-between text-sm mb-1">
                         <span class="text-gray-700">{{ $dist->name }}</span>
-                        <span class="font-semibold">${{ number_format($dist->total_revenue, 0) }}</span>
+                        <span class="font-semibold">₹{{ number_format($dist->total_revenue, 0) }}</span>
                     </div>
                     <div class="w-full bg-gray-200 rounded-full h-3">
                         <div class="bg-blue-600 h-3 rounded-full transition-all duration-500" style="width: {{ $percentage }}%"></div>

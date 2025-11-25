@@ -40,7 +40,7 @@
                                 </div>
                                 <div>
                                     <p class="text-xs text-gray-500">Base Price (from distributor)</p>
-                                    <p class="text-lg font-bold text-gray-900">${{ number_format($product->base_price, 2) }}</p>
+                                    <p class="text-lg font-bold text-gray-900">₹{{ number_format($product->base_price, 2) }}</p>
                                 </div>
                                 <div>
                                     <p class="text-xs text-gray-500">Stock Quantity</p>
@@ -69,7 +69,7 @@
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-2">Add Your Margin *</label>
                                 <div class="relative">
-                                    <span class="absolute left-3 top-2 text-gray-500">$</span>
+                                    <span class="absolute left-3 top-2 text-gray-500">₹</span>
                                     <input type="number" name="admin_margin" step="0.01" min="0" required
                                            class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                                            placeholder="0.00"
@@ -82,7 +82,7 @@
                             <div class="bg-white p-3 rounded border border-gray-300">
                                 <p class="text-xs text-gray-500">Final Clinic Price:</p>
                                 <p class="text-2xl font-bold text-green-600" id="final-price-{{ $product->id }}">
-                                    ${{ number_format($product->base_price, 2) }}
+                                    ₹{{ number_format($product->base_price, 2) }}
                                 </p>
                             </div>
 
@@ -129,7 +129,7 @@
 function calculateFinalPrice(productId, basePrice, margin) {
     margin = parseFloat(margin) || 0;
     const finalPrice = parseFloat(basePrice) + margin;
-    document.getElementById('final-price-' + productId).textContent = '$' + finalPrice.toFixed(2);
+    document.getElementById('final-price-' + productId).textContent = '₹' + finalPrice.toFixed(2);
 }
 </script>
 @endsection
