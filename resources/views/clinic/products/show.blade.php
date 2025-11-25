@@ -96,9 +96,9 @@
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium text-lg">
                             <i class="fas fa-shopping-cart mr-2"></i>Add to Cart
                         </button>
-                        <a href="{{ route('clinic.orders.create') }}?product_id={{ $product->id }}" class="block w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-lg text-center">
+                        <!-- <a href="{{ route('clinic.orders.create') }}?product_id={{ $product->id }}" class="block w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium text-lg text-center">
                             <i class="fas fa-bolt mr-2"></i>Order Now
-                        </a>
+                        </a> -->
                     </div>
                 </form>
             </div>
