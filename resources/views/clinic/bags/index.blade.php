@@ -45,7 +45,7 @@
                                 <p class="text-sm text-gray-500">{{ $product->distributor->name }}</p>
                                 <p class="text-sm text-gray-600 mt-1">SKU: {{ $product->sku }}</p>
                                 <div class="flex items-center gap-2 mt-2">
-                                    <span class="text-sm text-gray-500">${{ number_format($product->price, 2) }} each</span>
+                                    <span class="text-sm text-gray-500">₹{{ number_format($product->price, 2) }} each</span>
                                     @if($product->stock_quantity < 10)
                                     <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
                                         Only {{ $product->stock_quantity }} left
@@ -78,7 +78,7 @@
                         <div class="flex items-center gap-4">
                             <div class="text-right">
                                 <p class="text-sm text-gray-500">Total</p>
-                                <p class="text-xl font-bold text-gray-900">${{ number_format($product->subtotal, 2) }}</p>
+                                <p class="text-xl font-bold text-gray-900">₹{{ number_format($product->subtotal, 2) }}</p>
                             </div>
 
                             <form action="{{ route('clinic.bag.remove', $product) }}" method="POST">
@@ -103,15 +103,15 @@
                 <div class="space-y-3 mb-6">
                     <div class="flex justify-between text-gray-600">
                         <span>Items ({{ count($bagItems) }})</span>
-                        <span>${{ number_format($total, 2) }}</span>
+                        <span>₹{{ number_format($total, 2) }}</span>
                     </div>
                     <div class="flex justify-between text-gray-600">
                         <span>Tax (0%)</span>
-                        <span>$0.00</span>
+                        <span>₹0.00</span>
                     </div>
                     <div class="border-t pt-3 flex justify-between text-xl font-bold text-gray-900">
                         <span>Total</span>
-                        <span>${{ number_format($total, 2) }}</span>
+                        <span>₹{{ number_format($total, 2) }}</span>
                     </div>
                 </div>
 
