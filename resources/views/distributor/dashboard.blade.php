@@ -47,7 +47,7 @@
                 <div class="ml-5 w-0 flex-1">
                     <dl>
                         <dt class="text-sm font-medium text-gray-500 truncate">Pending Orders</dt>
-                        <dd class="text-3xl font-bold text-gray-900">{{ $stats['pending_bulk_orders'] }}</dd>
+                        <dd class="text-3xl font-bold text-gray-900">{{ $stats['pending_orders'] }}</dd>
                     </dl>
                 </div>
             </div>

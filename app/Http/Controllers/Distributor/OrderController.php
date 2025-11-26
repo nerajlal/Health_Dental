@@ -16,22 +16,14 @@ class OrderController extends Controller
     {
         $distributorId = Auth::id();
         
-        // Only show order items from orders that are NOT pending (i.e., approved by admin)
+        // Get all order items (not pending)
         $query = OrderItem::whereHas('product', function($q) use ($distributorId) {
             $q->where('distributor_id', $distributorId);
         })
         ->whereHas('order', function($q) {
-            // Exclude pending orders - only show after admin approval
             $q->where('status', '!=', 'pending');
         })
         ->with(['order.clinic', 'product']);
-
-        // Filter by order status if provided
-        if ($request->status) {
-            $query->whereHas('order', function($q) use ($request) {
-                $q->where('status', $request->status);
-            });
-        }
 
         // Filter by shipment status
         if ($request->shipped_status == 'shipped') {
@@ -47,9 +39,58 @@ class OrderController extends Controller
             });
         }
 
-        $orderItems = $query->orderBy('created_at', 'desc')->paginate(20);
+        $allOrderItems = $query->orderBy('created_at', 'desc')->get();
 
-        return view('distributor.orders.index', compact('orderItems'));
+        // Group by product
+        $groupedProducts = $allOrderItems->groupBy('product_id')->map(function($items, $productId) {
+            $firstItem = $items->first();
+            $product = $firstItem->product;
+            
+            // Calculate totals
+            $totalQuantity = $items->sum('quantity');
+            $totalEarning = $items->sum(function($item) {
+                return $item->quantity * $item->product->base_price;
+            });
+            
+            // Count shipped vs pending
+            $shippedCount = $items->where('shipped_to_admin', true)->count();
+            $pendingCount = $items->where('shipped_to_admin', false)->count();
+            $totalOrders = $items->count();
+            
+            // Get all order IDs
+            $orderIds = $items->pluck('order.id')->unique()->values();
+            
+            // Get all clinic names
+            $clinics = $items->pluck('order.clinic.name')->unique()->values();
+            
+            return (object) [
+                'product' => $product,
+                'total_quantity' => $totalQuantity,
+                'total_earning' => $totalEarning,
+                'shipped_count' => $shippedCount,
+                'pending_count' => $pendingCount,
+                'total_orders' => $totalOrders,
+                'order_ids' => $orderIds,
+                'clinics' => $clinics,
+                'items' => $items, // Keep individual items for details
+                'latest_date' => $items->max('created_at'),
+            ];
+        });
+
+        // Convert to collection and paginate manually
+        $perPage = 20;
+        $currentPage = request()->get('page', 1);
+        $groupedProductsCollection = collect($groupedProducts->values());
+        
+        $paginatedProducts = new \Illuminate\Pagination\LengthAwarePaginator(
+            $groupedProductsCollection->forPage($currentPage, $perPage),
+            $groupedProductsCollection->count(),
+            $perPage,
+            $currentPage,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('distributor.orders.index', compact('paginatedProducts', 'allOrderItems'));
     }
 
     public function bulkOrders(Request $request)

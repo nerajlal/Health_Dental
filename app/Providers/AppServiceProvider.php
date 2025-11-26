@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // Schema::defaultStringLength(191);
+        Schema::defaultStringLength(191);
         
         View::composer('*', function ($view) {
             if (auth()->check() && auth()->user()->role === 'clinic') {

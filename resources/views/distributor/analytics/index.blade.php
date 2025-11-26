@@ -72,10 +72,10 @@
             <div class="flex items-center justify-between">
                 <div>
                     <p class="text-sm text-gray-600">Total Earnings</p>
-                    <p class="text-2xl font-bold text-green-600">${{ number_format($summary['total_earnings'], 2) }}</p>
+                    <p class="text-2xl font-bold text-green-600">₹{{ number_format($summary['total_earnings'], 2) }}</p>
                 </div>
                 <div class="bg-green-100 rounded-full p-3">
-                    <i class="fas fa-dollar-sign text-green-600 text-xl"></i>
+                    <i class="fas fa-indian-rupee-sign text-green-600 text-xl"></i>
                 </div>
             </div>
         </div>
@@ -122,7 +122,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
                 <p class="text-sm text-gray-600 mb-2">Average Earnings Per Order</p>
-                <p class="text-3xl font-bold text-gray-900">${{ number_format($summary['average_order_value'], 2) }}</p>
+                <p class="text-3xl font-bold text-gray-900">₹{{ number_format($summary['average_order_value'], 2) }}</p>
             </div>
             <div>
                 <p class="text-sm text-gray-600 mb-2">Average Items Per Order</p>
@@ -148,7 +148,7 @@
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Product</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Clinic</th>
+                        <!-- <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Clinic</th> -->
                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Shipment Status</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Quantity</th>
                         <th class="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase">Your Price</th>
@@ -171,10 +171,10 @@
                             <div class="font-medium text-gray-900">{{ $item->product->name }}</div>
                             <div class="text-gray-500 text-xs">SKU: {{ $item->product->sku }}</div>
                         </td>
-                        <td class="px-6 py-4 text-sm text-gray-900">
+                        <!-- <td class="px-6 py-4 text-sm text-gray-900">
                             <div>{{ $item->order->clinic->name }}</div>
                             <div class="text-xs text-gray-500">{{ $item->order->clinic->email }}</div>
-                        </td>
+                        </td> -->
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             @if($item->shipped_to_admin)
                                 <div class="flex flex-col">
@@ -193,10 +193,10 @@
                             {{ $item->quantity }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right text-gray-900">
-                            ${{ number_format($item->product->base_price, 2) }}
+                            ₹{{ number_format($item->product->base_price, 2) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-right font-bold text-green-600">
-                            ${{ number_format($earnings, 2) }}
+                            ₹{{ number_format($earnings, 2) }}
                         </td>
                     </tr>
                     @empty
@@ -212,9 +212,9 @@
                 @if($orderItems->count() > 0)
                 <tfoot class="bg-gray-50 font-bold">
                     <tr>
-                        <td colspan="7" class="px-6 py-4 text-sm text-gray-900 text-right">TOTAL EARNINGS:</td>
+                        <td colspan="6" class="px-6 py-4 text-sm text-gray-900 text-right">TOTAL EARNINGS:</td>
                         <td class="px-6 py-4 text-sm text-right text-green-600">
-                            ${{ number_format($orderItems->sum(fn($item) => $item->quantity * $item->product->base_price), 2) }}
+                            ₹{{ number_format($orderItems->sum(fn($item) => $item->quantity * $item->product->base_price), 2) }}
                         </td>
                     </tr>
                 </tfoot>

@@ -34,12 +34,14 @@ class DashboardController extends Controller
         // Count unique orders
         $totalOrders = $orderItems->pluck('order_id')->unique()->count();
 
-        // Count PENDING orders (orders waiting for admin approval that contain this distributor's products)
-        $pendingOrdersCount = Order::where('status', 'pending')
-            ->whereHas('items.product', function($query) use ($distributor) {
-                $query->where('distributor_id', $distributor->id);
-            })
-            ->count();
+        // Count PENDING order items (items waiting for admin approval that are from this distributor)
+        $pendingOrderItemsCount = OrderItem::whereHas('product', function($query) use ($distributor) {
+            $query->where('distributor_id', $distributor->id);
+        })
+        ->whereHas('order', function($query) {
+            $query->where('status', 'pending');
+        })
+        ->count();
 
         // Stats
         $stats = [
@@ -50,7 +52,7 @@ class DashboardController extends Controller
                 ->where('status', 'approved')
                 ->count(),
             
-            'pending_orders' => $pendingOrdersCount,
+            'pending_orders' => $pendingOrderItemsCount,
             
             'total_revenue' => $totalRevenue,
         ];
