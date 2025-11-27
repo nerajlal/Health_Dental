@@ -13,6 +13,7 @@ use App\Http\Controllers\Clinic\DashboardController as ClinicDashboard;
 use App\Http\Controllers\Clinic\ProductController as ClinicProduct;
 use App\Http\Controllers\Clinic\OrderController as ClinicOrder;
 use App\Http\Controllers\Clinic\BagController as ClinicBag;
+use App\Http\Controllers\Distributor\CompetitionController;
 use App\Http\Controllers\Distributor\DashboardController as DistributorDashboard;
 use App\Http\Controllers\Distributor\ProductController as DistributorProduct;
 use App\Http\Controllers\Distributor\OrderController as DistributorOrder;
@@ -153,5 +154,9 @@ Route::middleware(['auth'])->prefix('distributor')->name('distributor.')->group(
     Route::get('/product-requests/{productRequest}/create-product', [App\Http\Controllers\Distributor\ProductRequestController::class, 'createProduct'])->name('product-requests.create-product');
     Route::post('/product-requests/{productRequest}/store-product', [App\Http\Controllers\Distributor\ProductRequestController::class, 'storeProduct'])->name('product-requests.store-product');
     Route::post('/product-requests/{productRequest}/fulfill', [App\Http\Controllers\Distributor\ProductRequestController::class, 'fulfill'])->name('product-requests.fulfill');
+
+    // Competition Routes
+    Route::get('/competition', [CompetitionController::class, 'index'])->name('competition.index');
+    Route::get('/competition/product/{product}', [CompetitionController::class, 'productComparison'])->name('competition.product');
 });
 
