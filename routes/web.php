@@ -142,6 +142,7 @@ Route::middleware(['auth'])->prefix('distributor')->name('distributor.')->group(
     Route::get('/analytics', [DistributorDashboard::class, 'analytics'])->name('analytics');
     
     // Products
+    Route::get('products/check-price', [DistributorProduct::class, 'checkCompetitorPrice'])->name('products.check-price');
     Route::resource('products', DistributorProduct::class);
     
     // Orders

@@ -146,4 +146,72 @@ class ProductController extends Controller
         return redirect()->route('distributor.products.index')
             ->with('success', 'Product deleted successfully.');
     }
+
+    public function checkCompetitorPrice(Request $request)
+    {
+        $sku = $request->input('sku');
+        $name = $request->input('name');
+        $company = $request->input('company');
+        $currentProductId = $request->input('product_id'); // For edit mode
+        
+        // Find similar products from other distributors
+        $query = Product::where('distributor_id', '!=', auth()->id())
+            ->where('status', 'approved')
+            ->where('is_active', true);
+        
+        // Match by SKU first (most accurate)
+        if ($sku) {
+            $query->where('sku', $sku);
+        } else {
+            // Fallback to name + company match
+            if ($name) {
+                $query->where('name', 'LIKE', '%' . $name . '%');
+            }
+            if ($company) {
+                $query->where('company', 'LIKE', '%' . $company . '%');
+            }
+        }
+        
+        // Exclude current product if editing
+        if ($currentProductId) {
+            $query->where('id', '!=', $currentProductId);
+        }
+        
+        $competitors = $query->select('id', 'name', 'company', 'sku', 'description', 'category', 'base_price', 'admin_margin', 'unit', 'stock_quantity', 'image', 'distributor_id')
+            ->with('distributor:id,name,email,phone')
+            ->orderBy('base_price', 'asc')
+            ->limit(5)
+            ->get();
+        
+        $lowestPrice = $competitors->first();
+        
+        return response()->json([
+            'has_competitors' => $competitors->isNotEmpty(),
+            'lowest_price' => $lowestPrice ? $lowestPrice->base_price + ($lowestPrice->admin_margin ?? 0) : null,
+            'lowest_price_distributor' => $lowestPrice ? $lowestPrice->distributor->name : null,
+            'competitors_count' => $competitors->count(),
+            'competitors' => $competitors->map(function($product) {
+                $finalPrice = $product->base_price + ($product->admin_margin ?? 0);
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'company' => $product->company,
+                    'sku' => $product->sku,
+                    'description' => $product->description,
+                    'category' => $product->category,
+                    'base_price' => $product->base_price,
+                    'admin_margin' => $product->admin_margin ?? 0,
+                    'final_price' => $finalPrice,
+                    'unit' => $product->unit,
+                    'stock_quantity' => $product->stock_quantity,
+                    'image' => $product->image ? asset('storage/' . $product->image) : null,
+                    'distributor' => [
+                        'name' => $product->distributor->name,
+                        'email' => $product->distributor->email,
+                        'phone' => $product->distributor->phone
+                    ]
+                ];
+            })
+        ]);
+    }
 }

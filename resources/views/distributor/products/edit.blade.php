@@ -4,12 +4,13 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900">Edit Product</h1>
-        <p class="mt-2 text-gray-600">Update product information</p>
+        <h1 class="section-title text-3xl mb-2">Edit Product</h1>
+        <p class="text-lg text-gray-600">Update product information</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow p-6">
+    <div class="card p-6">
         <form action="{{ route('distributor.products.update', $product) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -20,7 +21,7 @@
                     <label class="block text-sm font-medium text-gray-700 mb-2">Product Image</label>
                     <div class="flex items-center space-x-6">
                         <div class="shrink-0">
-                            <img id="preview" class="h-32 w-32 object-cover rounded-lg" 
+                            <img id="preview" class="h-32 w-32 object-cover rounded-lg border-2 border-gray-200" 
                                  src="{{ $product->image ? asset('storage/' . $product->image) : 'https://via.placeholder.com/150' }}" 
                                  alt="Product preview">
                         </div>
@@ -39,7 +40,7 @@
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700 mb-2">Product Name *</label>
                     <input type="text" name="name" id="name" value="{{ old('name', $product->name) }}" required
-                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     @error('name')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -50,7 +51,7 @@
                     <div>
                         <label for="sku" class="block text-sm font-medium text-gray-700 mb-2">SKU *</label>
                         <input type="text" name="sku" id="sku" value="{{ old('sku', $product->sku) }}" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         @error('sku')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -60,7 +61,7 @@
                     <div>
                         <label for="company" class="block text-sm font-medium text-gray-700 mb-2">Company/Brand</label>
                         <input type="text" name="company" id="company" value="{{ old('company', $product->company) }}"
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         @error('company')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -70,7 +71,7 @@
                 <!-- Category -->
                 <div>
                     <label for="category" class="block text-sm font-medium text-gray-700 mb-2">Category</label>
-                    <select name="category" id="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                    <select name="category" id="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         <option value="">Select category</option>
                         <option value="Restorative Materials" {{ old('category', $product->category) == 'Restorative Materials' ? 'selected' : '' }}>Restorative Materials</option>
                         <option value="Preventive Materials" {{ old('category', $product->category) == 'Preventive Materials' ? 'selected' : '' }}>Preventive Materials</option>
@@ -89,7 +90,7 @@
                 <div>
                     <label for="description" class="block text-sm font-medium text-gray-700 mb-2">Description</label>
                     <textarea name="description" id="description" rows="4"
-                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">{{ old('description', $product->description) }}</textarea>
+                              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">{{ old('description', $product->description) }}</textarea>
                     @error('description')
                         <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -102,7 +103,7 @@
                         <div class="relative">
                             <span class="absolute left-3 top-2 text-gray-500 font-medium">₹</span>
                             <input type="number" name="base_price" id="base_price" value="{{ old('base_price', $product->base_price) }}" step="0.01" min="0" required
-                                   class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                                   class="w-full pl-8 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         </div>
                         @error('base_price')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
@@ -113,7 +114,7 @@
                     <div>
                         <label for="stock_quantity" class="block text-sm font-medium text-gray-700 mb-2">Stock Quantity *</label>
                         <input type="number" name="stock_quantity" id="stock_quantity" value="{{ old('stock_quantity', $product->stock_quantity) }}" min="0" required
-                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                         @error('stock_quantity')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
@@ -122,7 +123,7 @@
                     <!-- Unit -->
                     <div>
                         <label for="unit" class="block text-sm font-medium text-gray-700 mb-2">Unit *</label>
-                        <select name="unit" id="unit" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                        <select name="unit" id="unit" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                             <option value="piece" {{ old('unit', $product->unit) == 'piece' ? 'selected' : '' }}>Piece</option>
                             <option value="box" {{ old('unit', $product->unit) == 'box' ? 'selected' : '' }}>Box</option>
                             <option value="pack" {{ old('unit', $product->unit) == 'pack' ? 'selected' : '' }}>Pack</option>
@@ -136,6 +137,9 @@
                     </div>
                 </div>
 
+                <!-- Competitor Price Alert -->
+                <div id="competitor-alert" class="hidden"></div>
+
                 <!-- Active Status -->
                 <div class="flex items-center">
                     <input type="checkbox" name="is_active" id="is_active" value="1" {{ old('is_active', $product->is_active) ? 'checked' : '' }}
@@ -147,11 +151,11 @@
 
                 <!-- Submit Buttons -->
                 <div class="flex items-center justify-end space-x-4 pt-6 border-t">
-                    <a href="{{ route('distributor.products.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-medium">
+                    <a href="{{ route('distributor.products.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-6 py-2 rounded-lg font-medium transition">
                         Cancel
                     </a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
-                        Update Product
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-save mr-2"></i>Update Product
                     </button>
                 </div>
             </div>
@@ -159,7 +163,23 @@
     </div>
 </div>
 
+<!-- Product Details Modal -->
+<div id="productModal" class="hidden fixed inset-0 bg-gray-900 bg-opacity-75 z-50 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4 py-8">
+        <div class="bg-white rounded-lg shadow-xl max-w-2xl w-full p-6">
+            <div class="flex justify-between items-start mb-4">
+                <h3 class="text-2xl font-bold text-gray-900" style="font-family: 'Playfair Display', serif;">Competitor Product Details</h3>
+                <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+</div>
+
 <script>
+// Image preview
 function previewImage(event) {
     const reader = new FileReader();
     reader.onload = function() {
@@ -168,5 +188,245 @@ function previewImage(event) {
     }
     reader.readAsDataURL(event.target.files[0]);
 }
+
+// Competitor price checking
+let priceCheckTimeout;
+let competitorsData = [];
+
+function checkCompetitorPrice() {
+    clearTimeout(priceCheckTimeout);
+    
+    priceCheckTimeout = setTimeout(() => {
+        const sku = document.getElementById('sku').value;
+        const name = document.getElementById('name').value;
+        const company = document.getElementById('company').value;
+        const basePrice = parseFloat(document.getElementById('base_price').value);
+        const productId = {{ $product->id }}; // Current product ID to exclude
+        
+        // Need at least SKU or (name + company)
+        if (!sku && (!name || !company)) {
+            hideCompetitorAlert();
+            return;
+        }
+        
+        // Fetch competitor prices (exclude current product)
+        fetch(`{{ route('distributor.products.check-price') }}?sku=${encodeURIComponent(sku)}&name=${encodeURIComponent(name)}&company=${encodeURIComponent(company)}&product_id=${productId}`)
+            .then(response => response.json())
+            .then(data => {
+                competitorsData = data.competitors || [];
+                if (data.has_competitors) {
+                    showCompetitorAlert(data, basePrice);
+                } else {
+                    hideCompetitorAlert();
+                }
+            })
+            .catch(error => {
+                console.error('Error checking prices:', error);
+                hideCompetitorAlert();
+            });
+    }, 500);
+}
+
+function showCompetitorAlert(data, myPrice) {
+    const alertDiv = document.getElementById('competitor-alert');
+    const lowestPrice = data.lowest_price;
+    const lowestDistributor = data.lowest_price_distributor;
+    
+    if (!lowestPrice) {
+        hideCompetitorAlert();
+        return;
+    }
+    
+    let html = '';
+    
+    if (!myPrice || myPrice === 0) {
+        html = `
+            <div class="border-l-4 border-blue-500 bg-blue-50 p-4 rounded-lg">
+                <div class="flex items-start">
+                    <i class="fas fa-info-circle text-blue-600 text-xl mt-1 mr-3"></i>
+                    <div class="flex-1">
+                        <p class="font-semibold text-blue-900">Market Price Information</p>
+                        <p class="text-sm text-blue-800 mt-1">
+                            Lowest market price: <span class="font-bold">₹${lowestPrice.toFixed(2)}</span> by ${lowestDistributor}
+                        </p>
+                        <button type="button" onclick="showProductDetails(0)" class="text-sm text-blue-600 hover:text-blue-800 font-semibold mt-2 underline">
+                            View competitor details →
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+    } else {
+        const priceDiff = myPrice - lowestPrice;
+        const percentDiff = ((priceDiff / lowestPrice) * 100).toFixed(1);
+        
+        if (myPrice <= lowestPrice) {
+            html = `
+                <div class="border-l-4 border-green-500 bg-green-50 p-4 rounded-lg">
+                    <div class="flex items-start">
+                        <i class="fas fa-check-circle text-green-600 text-xl mt-1 mr-3"></i>
+                        <div class="flex-1">
+                            <p class="font-semibold text-green-900">✓ Competitive Pricing!</p>
+                            <p class="text-sm text-green-800 mt-1">
+                                Your price is ${myPrice < lowestPrice ? percentDiff + '% lower than' : 'equal to'} the market lowest (₹${lowestPrice.toFixed(2)})
+                            </p>
+                            <button type="button" onclick="showProductDetails(0)" class="text-sm text-green-600 hover:text-green-800 font-semibold mt-2 underline">
+                                View competitor details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else if (percentDiff <= 10) {
+            html = `
+                <div class="border-l-4 border-yellow-500 bg-yellow-50 p-4 rounded-lg">
+                    <div class="flex items-start">
+                        <i class="fas fa-exclamation-triangle text-yellow-600 text-xl mt-1 mr-3"></i>
+                        <div class="flex-1">
+                            <p class="font-semibold text-yellow-900">⚠ Slightly Above Market</p>
+                            <p class="text-sm text-yellow-800 mt-1">
+                                <span class="font-bold">${lowestDistributor}</span> is selling at <span class="font-bold">₹${lowestPrice.toFixed(2)}</span> which is <span class="font-bold">${percentDiff}% lower</span> than your price
+                            </p>
+                            <button type="button" onclick="showProductDetails(0)" class="text-sm text-yellow-600 hover:text-yellow-800 font-semibold mt-2 underline">
+                                Click to view their product details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        } else {
+            html = `
+                <div class="border-l-4 border-red-500 bg-red-50 p-4 rounded-lg">
+                    <div class="flex items-start">
+                        <i class="fas fa-exclamation-circle text-red-600 text-xl mt-1 mr-3"></i>
+                        <div class="flex-1">
+                            <p class="font-semibold text-red-900">⚠ Price Above Market</p>
+                            <p class="text-sm text-red-800 mt-1">
+                                <span class="font-bold">${lowestDistributor}</span> is selling at <span class="font-bold">₹${lowestPrice.toFixed(2)}</span> which is <span class="font-bold">${percentDiff}% lower</span> than your price
+                            </p>
+                            <button type="button" onclick="showProductDetails(0)" class="text-sm text-red-600 hover:text-red-800 font-semibold mt-2 underline">
+                                Click to view their product details →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+    }
+    
+    alertDiv.innerHTML = html;
+    alertDiv.classList.remove('hidden');
+}
+
+function hideCompetitorAlert() {
+    document.getElementById('competitor-alert').classList.add('hidden');
+}
+
+function showProductDetails(index) {
+    if (!competitorsData || competitorsData.length === 0) return;
+    
+    const product = competitorsData[index];
+    const modal = document.getElementById('productModal');
+    const content = document.getElementById('modalContent');
+    
+    content.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+                ${product.image ? 
+                    `<img src="${product.image}" alt="${product.name}" class="w-full h-64 object-cover rounded-lg">` :
+                    `<div class="w-full h-64 bg-gradient-to-br from-gray-100 to-gray-200 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-tooth text-gray-400 text-6xl"></i>
+                    </div>`
+                }
+            </div>
+            <div>
+                <h4 class="text-xl font-bold text-gray-900 mb-2">${product.name}</h4>
+                <p class="text-gray-600 mb-4">${product.company || 'N/A'}</p>
+                
+                ${product.category ? `<span class="inline-block px-3 py-1 bg-purple-100 text-purple-800 text-sm font-semibold rounded-full mb-4">${product.category}</span>` : ''}
+                
+                <div class="space-y-2 mb-4">
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">SKU:</span>
+                        <span class="font-semibold">${product.sku}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Unit:</span>
+                        <span class="font-semibold">${product.unit}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-600">Stock:</span>
+                        <span class="font-semibold">${product.stock_quantity}</span>
+                    </div>
+                </div>
+                
+                <div class="border-t pt-4">
+                    <p class="text-sm text-gray-600 mb-1">Final Price</p>
+                    <p class="text-3xl font-bold gradient-text" style="font-family: 'Playfair Display', serif;">₹${product.final_price.toFixed(2)}</p>
+                    <p class="text-xs text-gray-500 mt-1">Base: ₹${product.base_price.toFixed(2)} + Margin: ₹${product.admin_margin.toFixed(2)}</p>
+                </div>
+            </div>
+        </div>
+        
+        ${product.description ? `
+            <div class="mt-6 pt-6 border-t">
+                <h5 class="font-semibold text-gray-900 mb-2">Description</h5>
+                <p class="text-gray-600 text-sm">${product.description}</p>
+            </div>
+        ` : ''}
+        
+        <div class="mt-6 pt-6 border-t">
+            <h5 class="font-semibold text-gray-900 mb-3">Distributor Information</h5>
+            <div class="bg-gray-50 p-4 rounded-lg">
+                <p class="font-semibold text-gray-900">${product.distributor.name}</p>
+                <p class="text-sm text-gray-600 mt-1"><i class="fas fa-envelope mr-2"></i>${product.distributor.email}</p>
+                <p class="text-sm text-gray-600"><i class="fas fa-phone mr-2"></i>${product.distributor.phone || 'N/A'}</p>
+            </div>
+        </div>
+        
+        ${competitorsData.length > 1 ? `
+            <div class="mt-6 pt-6 border-t">
+                <h5 class="font-semibold text-gray-900 mb-3">Other Competitors (${competitorsData.length - 1})</h5>
+                <div class="space-y-2">
+                    ${competitorsData.slice(1, 4).map((comp, idx) => `
+                        <button type="button" onclick="showProductDetails(${idx + 1})" class="w-full text-left p-3 bg-gray-50 hover:bg-gray-100 rounded-lg transition">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <p class="font-semibold text-gray-900">${comp.name}</p>
+                                    <p class="text-sm text-gray-600">${comp.distributor.name}</p>
+                                </div>
+                                <p class="text-lg font-bold text-blue-600">₹${comp.final_price.toFixed(2)}</p>
+                            </div>
+                        </button>
+                    `).join('')}
+                </div>
+            </div>
+        ` : ''}
+    `;
+    
+    modal.classList.remove('hidden');
+}
+
+function closeModal() {
+    document.getElementById('productModal').classList.add('hidden');
+}
+
+// Attach event listeners
+document.getElementById('sku').addEventListener('input', checkCompetitorPrice);
+document.getElementById('name').addEventListener('input', checkCompetitorPrice);
+document.getElementById('company').addEventListener('input', checkCompetitorPrice);
+document.getElementById('base_price').addEventListener('input', checkCompetitorPrice);
+
+// Close modal on outside click
+document.getElementById('productModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeModal();
+    }
+});
+
+// Check on page load
+document.addEventListener('DOMContentLoaded', function() {
+    checkCompetitorPrice();
+});
 </script>
 @endsection
