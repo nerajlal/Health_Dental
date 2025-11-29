@@ -4,12 +4,13 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
     <div class="mb-8 flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">Browse Products</h1>
-            <p class="mt-2 text-gray-600">Find dental supplies for your clinic</p>
+            <h1 class="section-title text-4xl mb-2">Browse Products</h1>
+            <p class="text-lg text-gray-600">Find dental supplies for your clinic</p>
         </div>
-        <a href="{{ route('clinic.cart') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium relative">
+        <a href="{{ route('clinic.cart') }}" class="btn-primary flex items-center">
             <i class="fas fa-shopping-cart mr-2"></i> Cart
             @php
                 $cartCount = session()->get('cart', []);
@@ -18,28 +19,31 @@
                 });
             @endphp
             @if($totalItems > 0)
-            <!-- <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full h-6 w-6 flex items-center justify-center">
+            <span class="ml-2 bg-white text-blue-600 rounded-full px-2 py-1 text-xs font-bold">
                 {{ $totalItems }}
-            </span> -->
+            </span>
             @endif
         </a>
     </div>
 
     @if(session('success'))
-    <div class="bg-green-50 border border-green-200 text-green-800 px-4 py-3 rounded mb-6">
-        <i class="fas fa-check-circle mr-2"></i>{{ session('success') }}
+    <div class="bg-green-50 border-l-4 border-green-500 text-green-800 px-6 py-4 rounded-lg mb-6 flex items-center">
+        <i class="fas fa-check-circle text-2xl mr-3"></i>
+        <span>{{ session('success') }}</span>
     </div>
     @endif
 
     <!-- Search and Filter -->
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="card p-6 mb-8">
         <form action="{{ route('clinic.products.index') }}" method="GET" class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search products..."
-                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Search Products</label>
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Search by name, SKU, company..."
+                       class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
             </div>
             <div>
-                <select name="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500">
+                <label class="block text-sm font-medium text-gray-700 mb-2">Category</label>
+                <select name="category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                     <option value="">All Categories</option>
                     @foreach($categories as $category)
                     <option value="{{ $category }}" {{ request('category') == $category ? 'selected' : '' }}>
@@ -48,8 +52,8 @@
                     @endforeach
                 </select>
             </div>
-            <div>
-                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
+            <div class="flex items-end">
+                <button type="submit" class="w-full btn-primary">
                     <i class="fas fa-search mr-2"></i>Search
                 </button>
             </div>
@@ -59,14 +63,14 @@
     <!-- Products Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         @forelse($products as $product)
-        <div class="bg-white rounded-lg shadow hover:shadow-lg transition">
-            <div class="relative group">
+        <div class="card overflow-hidden group">
+            <div class="relative">
                 <a href="{{ route('clinic.products.show', $product) }}" class="block">
                     @if($product->image)
-                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover rounded-t-lg">
+                    <img src="{{ asset('storage/' . $product->image) }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
                     @else
-                    <div class="w-full h-48 bg-gray-200 rounded-t-lg flex items-center justify-center">
-                        <i class="fas fa-tooth text-gray-400 text-4xl"></i>
+                    <div class="w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center">
+                        <i class="fas fa-tooth text-gray-400 text-5xl"></i>
                     </div>
                     @endif
                 </a>
@@ -77,20 +81,20 @@
                     @csrf
                     <input type="hidden" name="quantity" value="1">
                     <button type="submit" 
-                            class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 shadow-lg transition transform hover:scale-110 opacity-0 group-hover:opacity-100"
+                            class="bg-white text-blue-600 hover:bg-blue-600 hover:text-white rounded-full p-3 shadow-lg transition transform hover:scale-110 opacity-0 group-hover:opacity-100"
                             title="Quick Add to Cart">
                         <i class="fas fa-cart-plus text-lg"></i>
                     </button>
                 </form>
                 @else
-                <div class="absolute top-3 right-3 bg-red-500 text-white rounded-full px-3 py-2 text-xs font-semibold">
+                <div class="absolute top-3 right-3 bg-red-500 text-white rounded-full px-3 py-2 text-xs font-semibold shadow-lg">
                     Out of Stock
                 </div>
                 @endif
 
                 <!-- Stock Badge -->
                 @if($product->stock_quantity > 0 && $product->stock_quantity <= 10)
-                <div class="absolute top-3 left-3 bg-yellow-500 text-white rounded-full px-3 py-1 text-xs font-semibold">
+                <div class="absolute top-3 left-3 bg-yellow-500 text-white rounded-full px-3 py-1 text-xs font-semibold shadow-lg">
                     Only {{ $product->stock_quantity }} left
                 </div>
                 @endif
@@ -108,36 +112,36 @@
                 </span>
                 @endif
 
-                <div class="flex items-center justify-between mb-3">
+                <div class="flex items-center justify-between mb-3 pb-3 border-b border-gray-100">
                     <div>
-                        <p class="text-sm text-gray-500">Price</p>
-                        <p class="text-2xl font-bold text-gray-900">
+                        <p class="text-xs text-gray-500 mb-1">Price</p>
+                        <p class="text-2xl font-bold gradient-text" style="font-family: 'Playfair Display', serif;">
                             ₹{{ number_format($product->display_price ?? ($product->base_price + $product->admin_margin), 2) }}
                         </p>
                         <p class="text-xs text-gray-500">per {{ $product->unit }}</p>
                     </div>
                     <div class="text-right">
                         @if($product->stock_quantity > 0)
-                        <span class="text-xs text-green-600 font-medium">
-                            <i class="fas fa-check-circle"></i> In Stock
+                        <span class="text-xs text-green-600 font-semibold flex items-center">
+                            <i class="fas fa-check-circle mr-1"></i> In Stock
                         </span>
                         <p class="text-xs text-gray-500 mt-1">{{ $product->stock_quantity }} available</p>
                         @else
-                        <span class="text-xs text-red-600 font-medium">
-                            <i class="fas fa-times-circle"></i> Out of Stock
+                        <span class="text-xs text-red-600 font-semibold flex items-center">
+                            <i class="fas fa-times-circle mr-1"></i> Out of Stock
                         </span>
                         @endif
                     </div>
                 </div>
 
-                <div class="text-sm text-gray-600 mb-3">
-                    <i class="fas fa-building text-gray-400"></i>
-                    {{ $product->distributor->name }}
+                <div class="text-sm text-gray-600 mb-3 flex items-center">
+                    <i class="fas fa-building text-gray-400 mr-2"></i>
+                    <span class="truncate">{{ $product->distributor->name }}</span>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
                     <a href="{{ route('clinic.products.show', $product) }}" 
-                       class="text-center bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg font-medium transition text-sm">
+                       class="text-center bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition text-sm">
                         <i class="fas fa-eye mr-1"></i>Details
                     </a>
                     
@@ -146,7 +150,7 @@
                         @csrf
                         <input type="hidden" name="quantity" value="1">
                         <button type="submit" 
-                                class="w-full bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition text-sm">
+                                class="w-full btn-primary text-sm py-2">
                             <i class="fas fa-cart-plus mr-1"></i>Add
                         </button>
                     </form>
@@ -161,21 +165,21 @@
         </div>
         @empty
         <div class="col-span-full">
-            <div class="bg-white rounded-lg shadow p-12 text-center">
+            <div class="card p-12 text-center">
                 <i class="fas fa-box-open text-gray-300 text-6xl mb-4"></i>
-                <h2 class="text-2xl font-semibold text-gray-900 mb-2">No Products Found</h2>
+                <h2 class="text-2xl font-semibold text-gray-900 mb-2" style="font-family: 'Playfair Display', serif;">No Products Found</h2>
                 <p class="text-gray-600">Try adjusting your search or filter criteria</p>
             </div>
         </div>
         @endforelse
     </div>
 
+    <!-- Pagination -->
     <div class="mt-8">
         {{ $products->links() }}
     </div>
 </div>
 
-<!-- Success Toast (Optional) -->
 <style>
 .line-clamp-2 {
     display: -webkit-box;

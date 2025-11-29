@@ -7,8 +7,107 @@
     <title>@yield('title', 'Dental Supply Management')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #1a202c;
+            line-height: 1.6;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f2557 0%, #1e3a8a 50%, #3b82f6 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #0f2557 0%, #1e3a8a 50%, #3b82f6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #0f2557;
+        }
+        
+        nav {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.98);
+            box-shadow: 0 2px 10px rgba(15, 37, 87, 0.08);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #0f2557 0%, #3b82f6 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0f2557 0%, #1e3a8a 50%, #3b82f6 100%);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(15, 37, 87, 0.3);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 2px 8px rgba(15, 37, 87, 0.06);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            box-shadow: 0 8px 20px rgba(15, 37, 87, 0.12);
+        }
+        
+        .stat-card {
+            background: linear-gradient(135deg, rgba(15, 37, 87, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(15, 37, 87, 0.1);
+        }
+    </style>
 </head>
 <body class="bg-gray-50">
+
     <!-- Navigation -->
     @auth
     <nav class="bg-white shadow-lg fixed w-full z-50 top-0">
@@ -26,8 +125,8 @@
                         <a href="@if(auth()->user()->role == 'admin') {{ route('admin.dashboard') }}
                                 @elseif(auth()->user()->role == 'clinic') {{ route('clinic.dashboard') }}
                                 @else {{ route('distributor.dashboard') }} @endif" 
-                           class="text-2xl font-bold text-blue-600">
-                            <i class="fas fa-tooth mr-2"></i>DentalSupply
+                           class="text-2xl font-bold gradient-text" style="font-family: 'Playfair Display', serif;">
+                            <i class="fas fa-tooth mr-2"></i>DentalChain
                         </a>
                     </div>
                     <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
@@ -117,6 +216,9 @@
                                 
                             @endif
                             <span class="text-gray-700">{{ auth()->user()->name }}</span>
+                            <a href="{{ route('profile.show') }}" class="text-gray-600 hover:text-blue-600 transition" title="My Profile">
+                                <i class="fas fa-user-circle text-2xl"></i>
+                            </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
                                 <button type="submit" class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-lg text-sm">
@@ -194,10 +296,13 @@
                     </div>
                 </div>
                 <div class="mt-3 space-y-1">
+                    <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
+                        <i class="fas fa-user-circle mr-2"></i>My Profile
+                    </a>
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <button type="submit" class="block w-full text-left px-4 py-2 text-base font-medium text-gray-500 hover:text-gray-800 hover:bg-gray-100">
-                            Logout
+                            <i class="fas fa-sign-out-alt mr-2"></i>Logout
                         </button>
                     </form>
                 </div>

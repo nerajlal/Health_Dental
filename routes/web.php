@@ -29,9 +29,12 @@ use App\Http\Controllers\Distributor\OrderController as DistributorOrder;
 //     return redirect()->route('login');
 // });
 
+
 Route::get('/', [LandingController::class, 'index'])->name('landing.index');
 Route::get('/about', [LandingController::class, 'about'])->name('landing.about');
+Route::get('/our-story', [LandingController::class, 'story'])->name('landing.story');
 Route::get('/contact', [LandingController::class, 'contact'])->name('landing.contact');
+
 
 // Partner Request
 Route::post('/partner-request', [PartnerRequestController::class, 'store'])->name('partner.request.store');
@@ -40,6 +43,14 @@ Route::post('/partner-request', [PartnerRequestController::class, 'store'])->nam
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Profile Routes (for all authenticated users)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');
+    Route::put('/profile', [App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::put('/profile/password', [App\Http\Controllers\ProfileController::class, 'updatePassword'])->name('profile.password.update');
+});
+
 
 // Admin Routes
 Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {

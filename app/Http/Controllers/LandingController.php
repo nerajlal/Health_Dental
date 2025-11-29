@@ -23,6 +23,11 @@ class LandingController extends Controller
         return view('landing.contact');
     }
 
+    public function story()
+    {
+        return view('landing.story');
+    }
+
     public function partnerRegister(Request $request)
     {
         $validated = $request->validate([

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+\u003c!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -7,34 +7,109 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         
         body {
             font-family: 'Inter', sans-serif;
+            color: #1a202c;
+            line-height: 1.6;
         }
         
         .gradient-bg {
-            background: linear-gradient(135deg, #1e40af 0%, #6366f1 100%);
+            background: linear-gradient(135deg, #0f2557 0%, #1e3a8a 50%, #3b82f6 100%);
         }
         
         .gradient-text {
-            background: linear-gradient(135deg, #1e40af 0%, #6366f1 100%);
+            background: linear-gradient(135deg, #0f2557 0%, #1e3a8a 50%, #3b82f6 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
         
         .feature-card {
-            transition: all 0.3s ease;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid #e5e7eb;
         }
         
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(15, 37, 87, 0.12);
+            border-color: #3b82f6;
         }
         
         .mobile-menu {
             transition: max-height 0.3s ease-in-out;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #0f2557 0%, #1e3a8a 50%, #3b82f6 100%);
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(15, 37, 87, 0.3);
+        }
+        
+        .btn-secondary {
+            border: 2px solid #0f2557;
+            color: #0f2557;
+            padding: 0.875rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            background: white;
+        }
+        
+        .btn-secondary:hover {
+            background: #0f2557;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            color: #0f2557;
+        }
+        
+        nav {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.95);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #0f2557 0%, #3b82f6 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
         }
     </style>
 </head>
@@ -53,10 +128,11 @@
 
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('landing.index') }}" class="text-gray-700 hover:text-blue-600 font-medium transition">Home</a>
-                    <a href="{{ route('landing.about') }}" class="text-gray-700 hover:text-blue-600 font-medium transition">About</a>
-                    <a href="{{ route('landing.contact') }}" class="text-gray-700 hover:text-blue-600 font-medium transition">Contact</a>
-                    <a href="#" onclick="openPartnerModal()" class="text-gray-700 hover:text-blue-600 font-medium transition">Partner With Us</a>
+                    <a href="{{ route('landing.index') }}" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Home</a>
+                    <a href="{{ route('landing.about') }}" class="nav-link text-gray-700 hover:text-blue-600 font-medium">About</a>
+                    <a href="{{ route('landing.story') }}" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Our Story</a>
+                    <a href="{{ route('landing.contact') }}" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Contact</a>
+                    <a href="#" onclick="openPartnerModal()" class="nav-link text-gray-700 hover:text-blue-600 font-medium">Partner With Us</a>
                 </div>
 
                 <!-- Login Button -->
@@ -79,6 +155,7 @@
                 <div class="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
                     <a href="{{ route('landing.index') }}" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium">Home</a>
                     <a href="{{ route('landing.about') }}" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium">About</a>
+                    <a href="{{ route('landing.story') }}" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium">Our Story</a>
                     <a href="{{ route('landing.contact') }}" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium">Contact</a>
                     <a href="#" onclick="openPartnerModal()" class="block px-3 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-md font-medium">Partner With Us</a>
                     <div class="border-t border-gray-200 pt-4">
@@ -121,6 +198,7 @@
                     <ul class="space-y-2">
                         <li><a href="{{ route('landing.index') }}" class="text-gray-400 hover:text-white transition">Home</a></li>
                         <li><a href="{{ route('landing.about') }}" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="{{ route('landing.story') }}" class="text-gray-400 hover:text-white transition">Our Story</a></li>
                         <li><a href="{{ route('landing.contact') }}" class="text-gray-400 hover:text-white transition">Contact</a></li>
                         <li><a href="#" onclick="openPartnerModal()" class="text-gray-400 hover:text-white transition">Partner With Us</a></li>
                     </ul>
