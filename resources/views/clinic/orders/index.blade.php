@@ -4,37 +4,38 @@
 
 @section('content')
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Header -->
     <div class="mb-8 flex justify-between items-center">
         <div>
-            <h1 class="text-3xl font-bold text-gray-900">My Orders</h1>
-            <p class="mt-2 text-gray-600">Track and manage your orders</p>
+            <h1 class="section-title text-4xl mb-2">My Orders</h1>
+            <p class="text-lg text-gray-600">Track and manage your orders</p>
         </div>
-        <a href="{{ route('clinic.products.index') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
+        <a href="{{ route('clinic.products.index') }}" class="btn-primary">
             <i class="fas fa-plus mr-2"></i>Create Order
         </a>
     </div>
 
     <!-- Order Status Filter -->
-    <div class="bg-white rounded-lg shadow p-6 mb-6">
+    <div class="card p-6 mb-8">
         <div class="flex items-center space-x-4 overflow-x-auto">
             <a href="{{ route('clinic.orders.index') }}" 
-               class="px-4 py-2 rounded-lg font-medium {{ !request('status') ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
-                All 
+               class="px-4 py-2 rounded-lg font-medium transition {{ !request('status') ? 'bg-gradient-to-r from-blue-600 to-blue-700 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+                All Orders
             </a>
             <a href="{{ route('clinic.orders.index', ['status' => 'pending']) }}" 
-               class="px-4 py-2 rounded-lg font-medium {{ request('status') == 'pending' ? 'bg-yellow-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+               class="px-4 py-2 rounded-lg font-medium transition {{ request('status') == 'pending' ? 'bg-yellow-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                 Pending
             </a>
             <a href="{{ route('clinic.orders.index', ['status' => 'processing']) }}" 
-               class="px-4 py-2 rounded-lg font-medium {{ request('status') == 'processing' ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+               class="px-4 py-2 rounded-lg font-medium transition {{ request('status') == 'processing' ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                 Processing
             </a>
             <a href="{{ route('clinic.orders.index', ['status' => 'shipped']) }}" 
-               class="px-4 py-2 rounded-lg font-medium {{ request('status') == 'shipped' ? 'bg-purple-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+               class="px-4 py-2 rounded-lg font-medium transition {{ request('status') == 'shipped' ? 'bg-purple-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                 Shipped
             </a>
             <a href="{{ route('clinic.orders.index', ['status' => 'delivered']) }}" 
-               class="px-4 py-2 rounded-lg font-medium {{ request('status') == 'delivered' ? 'bg-green-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
+               class="px-4 py-2 rounded-lg font-medium transition {{ request('status') == 'delivered' ? 'bg-green-500 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200' }}">
                 Delivered
             </a>
         </div>
@@ -43,10 +44,13 @@
     <!-- Orders List -->
     <div class="space-y-4">
         @forelse($orders as $order)
-        <div class="bg-white rounded-lg shadow hover:shadow-lg transition">
+        <div class="card hover:shadow-lg transition">
             <div class="p-6">
                 <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4">
                     <div class="flex items-center space-x-4 mb-4 sm:mb-0">
+                        <div class="w-12 h-12 gradient-bg rounded-lg flex items-center justify-center">
+                            <i class="fas fa-shopping-bag text-white text-xl"></i>
+                        </div>
                         <div>
                             <h3 class="text-lg font-semibold text-gray-900">Order #{{ $order->id }}</h3>
                             <p class="text-sm text-gray-500">{{ $order->created_at->format('M d, Y h:i A') }}</p>
@@ -63,7 +67,7 @@
                             @endif">
                             {{ ucfirst($order->status) }}
                         </span>
-                        <p class="text-2xl font-bold text-gray-900 mt-2">₹{{ number_format($order->total_amount, 2) }}</p>
+                        <p class="text-2xl font-bold gradient-text mt-2" style="font-family: 'Playfair Display', serif;">₹{{ number_format($order->total_amount, 2) }}</p>
                     </div>
                 </div>
 
@@ -71,7 +75,7 @@
                 <div class="border-t border-gray-200 pt-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         @foreach($order->items->take(3) as $item)
-                        <div class="flex items-center space-x-3">
+                        <div class="flex items-center space-x-3 bg-gray-50 p-3 rounded-lg">
                             @if($item->product->image)
                             <img src="{{ asset('storage/' . $item->product->image) }}" alt="{{ $item->product->name }}" class="w-12 h-12 rounded object-cover">
                             @else
@@ -87,8 +91,8 @@
                         @endforeach
                         
                         @if($order->items->count() > 3)
-                        <div class="flex items-center justify-center text-gray-500">
-                            <span class="text-sm">+{{ $order->items->count() - 3 }} more items</span>
+                        <div class="flex items-center justify-center text-gray-500 bg-gray-50 p-3 rounded-lg">
+                            <span class="text-sm font-medium">+{{ $order->items->count() - 3 }} more items</span>
                         </div>
                         @endif
                     </div>
@@ -96,27 +100,28 @@
 
                 <!-- Actions -->
                 <div class="border-t border-gray-200 pt-4 mt-4 flex items-center justify-between">
-                    <div class="text-sm text-gray-600">
+                    <div class="text-sm text-gray-600 flex items-center">
                         <i class="fas fa-box mr-2"></i>{{ $order->items->count() }} items
                     </div>
-                    <a href="{{ route('clinic.orders.show', $order) }}" class="text-blue-600 hover:text-blue-800 font-medium">
-                        View Details <i class="fas fa-arrow-right ml-1"></i>
+                    <a href="{{ route('clinic.orders.show', $order) }}" class="text-blue-600 hover:text-blue-800 font-semibold flex items-center">
+                        View Details <i class="fas fa-arrow-right ml-2"></i>
                     </a>
                 </div>
             </div>
         </div>
         @empty
-        <div class="bg-white rounded-lg shadow p-12 text-center">
+        <div class="card p-12 text-center">
             <i class="fas fa-shopping-bag text-gray-300 text-6xl mb-4"></i>
-            <h2 class="text-2xl font-semibold text-gray-900 mb-2">No Orders Yet</h2>
+            <h2 class="text-3xl font-semibold text-gray-900 mb-2" style="font-family: 'Playfair Display', serif;">No Orders Yet</h2>
             <p class="text-gray-600 mb-6">Start shopping for dental supplies</p>
-            <a href="{{ route('clinic.products.index') }}" class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium">
-                Browse Products
+            <a href="{{ route('clinic.products.index') }}" class="inline-block btn-primary">
+                <i class="fas fa-search mr-2"></i>Browse Products
             </a>
         </div>
         @endforelse
     </div>
 
+    <!-- Pagination -->
     <div class="mt-6">
         {{ $orders->links() }}
     </div>
