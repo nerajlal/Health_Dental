@@ -175,8 +175,8 @@
     <footer class="bg-gray-900 text-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <!-- Company Info -->
-                <div class="col-span-1 md:col-span-2">
+                <!-- Company Info - Full width on mobile, 1 column on desktop -->
+                <div class="col-span-1">
                     <div class="flex items-center mb-4">
                         <i class="fas fa-tooth text-3xl text-blue-400"></i>
                         <span class="ml-2 text-2xl font-bold">DentalChain</span>
@@ -185,32 +185,45 @@
                         Reducing costs for dental clinics through collective bulk purchasing power.
                     </p>
                     <div class="flex space-x-4">
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f text-xl"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in text-xl"></i></a>
-                        <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
+                        <a href="{{ config('contact.social.facebook') }}" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f text-xl"></i></a>
+                        <a href="{{ config('contact.social.twitter') }}" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter text-xl"></i></a>
+                        <a href="{{ config('contact.social.linkedin') }}" class="text-gray-400 hover:text-white transition"><i class="fab fa-linkedin-in text-xl"></i></a>
+                        <a href="{{ config('contact.social.instagram') }}" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram text-xl"></i></a>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
-                <div>
-                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
-                    <ul class="space-y-2">
-                        <li><a href="{{ route('landing.index') }}" class="text-gray-400 hover:text-white transition">Home</a></li>
-                        <li><a href="{{ route('landing.about') }}" class="text-gray-400 hover:text-white transition">About Us</a></li>
-                        <li><a href="{{ route('landing.story') }}" class="text-gray-400 hover:text-white transition">Our Story</a></li>
-                        <li><a href="{{ route('landing.contact') }}" class="text-gray-400 hover:text-white transition">Contact</a></li>
-                        <li><a href="#" onclick="openPartnerModal()" class="text-gray-400 hover:text-white transition">Partner With Us</a></li>
-                    </ul>
+                <!-- Quick Links & Legal Wrapper for mobile layout -->
+                <div class="grid grid-cols-2 col-span-1 md:col-span-2 gap-8">
+                    <!-- Quick Links - Half width on mobile, 1 column on desktop -->
+                    <div class="col-span-1">
+                        <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="{{ route('landing.index') }}" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="{{ route('landing.about') }}" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                            <li><a href="{{ route('landing.story') }}" class="text-gray-400 hover:text-white transition">Our Story</a></li>
+                            <li><a href="{{ route('landing.contact') }}" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Legal - Half width on mobile, 1 column on desktop -->
+                    <div class="col-span-1">
+                        <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                        <ul class="space-y-2">
+                            <li><a href="{{ route('landing.privacy') }}" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                            <li><a href="{{ route('landing.terms') }}" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                            <li><a href="{{ route('landing.refund') }}" class="text-gray-400 hover:text-white transition">Refund Policy</a></li>
+                            <li><a href="{{ route('landing.faq') }}" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                        </ul>
+                    </div>
                 </div>
 
-                <!-- Contact Info -->
-                <div>
+                <!-- Contact Info - Full width on mobile, 1 column on desktop -->
+                <div class="col-span-1">
                     <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
                     <ul class="space-y-2 text-gray-400">
-                        <li><i class="fas fa-envelope mr-2"></i> info@dentalchain.com</li>
-                        <li><i class="fas fa-phone mr-2"></i> +1 (555) 123-4567</li>
-                        <li><i class="fas fa-map-marker-alt mr-2"></i> 123 Business Park, City</li>
+                        <li><i class="fas fa-envelope mr-2"></i> {{ config('contact.contact.email') }}</li>
+                        <li><i class="fas fa-phone mr-2"></i> {{ config('contact.contact.phone') }}</li>
+                        <li><i class="fas fa-map-marker-alt mr-2"></i> {{ config('contact.contact.address') }}</li>
                     </ul>
                 </div>
             </div>
@@ -485,6 +498,39 @@
             }
         });
     </script>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/{{ config('contact.contact.whatsapp') }}?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20DentalChain" target="_blank" class="fixed bottom-6 right-6 z-50 group">
+        <div class="relative">
+            <!-- Main Button -->
+            <div class="w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:scale-110">
+                <i class="fab fa-whatsapp text-white text-3xl"></i>
+            </div>
+            
+            <!-- Tooltip -->
+            <div class="absolute right-20 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white px-4 py-2 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-xl">
+                <span class="text-sm font-semibold">Chat with us on WhatsApp</span>
+                <!-- Arrow -->
+                <div class="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-2 bg-gray-900"></div>
+            </div>
+            
+            <!-- Pulse Animation -->
+            <div class="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-30"></div>
+        </div>
+    </a>
+
+    <style>
+        @keyframes ping {
+            75%, 100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+        
+        .animate-ping {
+            animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+    </style>
 
 </body>
 </html>

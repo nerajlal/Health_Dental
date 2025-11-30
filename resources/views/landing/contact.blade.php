@@ -88,7 +88,7 @@
                         </div>
                         <div>
                             <h3 class="font-bold text-gray-900 mb-2 text-lg">Office Address</h3>
-                            <p class="text-gray-600">123 Business Park<br>Medical District<br>City, State 12345</p>
+                            <p class="text-gray-600">{{ config('contact.contact.address') }}</p>
                         </div>
                     </div>
 
@@ -100,9 +100,9 @@
                         <div>
                             <h3 class="font-bold text-gray-900 mb-2 text-lg">Phone</h3>
                             <p class="text-gray-600 mb-2">
-                                <a href="tel:+15551234567" class="hover:text-blue-600 transition">+1 (555) 123-4567</a>
+                                <a href="tel:{{ str_replace([' ', '(', ')', '-'], '', config('contact.contact.phone')) }}" class="hover:text-blue-600 transition">{{ config('contact.contact.phone') }}</a>
                             </p>
-                            <p class="text-sm text-gray-500">Monday - Friday: 9:00 AM - 6:00 PM</p>
+                            <p class="text-sm text-gray-500">{{ config('contact.hours') }}</p>
                         </div>
                     </div>
 
@@ -114,11 +114,11 @@
                         <div>
                             <h3 class="font-bold text-gray-900 mb-2 text-lg">Email</h3>
                             <p class="text-gray-600 mb-1">
-                                <a href="mailto:info@dentalchain.com" class="hover:text-blue-600 transition">info@dentalchain.com</a>
+                                <a href="mailto:{{ config('contact.contact.email') }}" class="hover:text-blue-600 transition">{{ config('contact.contact.email') }}</a>
                             </p>
-                            <p class="text-gray-600">
-                                <a href="mailto:support@dentalchain.com" class="hover:text-blue-600 transition">support@dentalchain.com</a>
-                            </p>
+                            <!-- <p class="text-gray-600">
+                                <a href="mailto:{{ config('contact.emails.support') }}" class="hover:text-blue-600 transition">{{ config('contact.emails.support') }}</a>
+                            </p> -->
                         </div>
                     </div>
                 </div>
@@ -127,16 +127,16 @@
                 <div class="mt-12">
                     <h3 class="font-bold text-gray-900 mb-4 text-lg">Follow Us</h3>
                     <div class="flex space-x-4">
-                        <a href="#" class="w-12 h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition">
+                        <a href="{{ config('contact.social.facebook') }}" class="w-12 h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition">
                             <i class="fab fa-facebook-f text-xl"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition">
+                        <a href="{{ config('contact.social.twitter') }}" class="w-12 h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition">
                             <i class="fab fa-twitter text-xl"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition">
+                        <a href="{{ config('contact.social.linkedin') }}" class="w-12 h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition">
                             <i class="fab fa-linkedin-in text-xl"></i>
                         </a>
-                        <a href="#" class="w-12 h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition">
+                        <a href="{{ config('contact.social.instagram') }}" class="w-12 h-12 border-2 border-gray-300 rounded-full flex items-center justify-center text-gray-600 hover:border-blue-600 hover:text-blue-600 transition">
                             <i class="fab fa-instagram text-xl"></i>
                         </a>
                     </div>
@@ -146,7 +146,7 @@
                 <div class="mt-12">
                     <div class="bg-gray-200 rounded-2xl overflow-hidden shadow-lg" style="height: 300px;">
                         <iframe 
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.2412648750455!2d-73.98823492346454!3d40.75889697138558!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25855c6480299%3A0x55194ec5a1ae072e!2sTimes%20Square!5e0!3m2!1sen!2sus!4v1234567890123!5m2!1sen!2sus" 
+                            src="{{ config('contact.contact.map_url') }}" 
                             width="100%" 
                             height="300" 
                             style="border:0;" 

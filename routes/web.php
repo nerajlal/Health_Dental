@@ -34,6 +34,10 @@ Route::get('/', [LandingController::class, 'index'])->name('landing.index');
 Route::get('/about', [LandingController::class, 'about'])->name('landing.about');
 Route::get('/our-story', [LandingController::class, 'story'])->name('landing.story');
 Route::get('/contact', [LandingController::class, 'contact'])->name('landing.contact');
+Route::get('/privacy-policy', [LandingController::class, 'privacy'])->name('landing.privacy');
+Route::get('/terms-of-service', [LandingController::class, 'terms'])->name('landing.terms');
+Route::get('/refund-policy', [LandingController::class, 'refund'])->name('landing.refund');
+Route::get('/faq', [LandingController::class, 'faq'])->name('landing.faq');
 
 
 // Partner Request

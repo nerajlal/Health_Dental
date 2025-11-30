@@ -527,5 +527,39 @@ document.getElementById('requestProductModal')?.addEventListener('click', functi
 </script>
 @endif
 @endauth
+
+<!-- Floating WhatsApp Button -->
+<a href="https://wa.me/{{ config('contact.contact.whatsapp') }}?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20DentalChain" target="_blank" class="fixed bottom-6 right-6 z-50 group">
+    <div class="relative">
+        <!-- Main Button -->
+        <div class="w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center shadow-lg hover:shadow-2xl transition-all duration-300 group-hover:scale-110">
+            <i class="fab fa-whatsapp text-white text-3xl"></i>
+        </div>
+        
+        <!-- Tooltip -->
+        <div class="absolute right-20 top-1/2 transform -translate-y-1/2 bg-gray-900 text-white px-4 py-2 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-xl">
+            <span class="text-sm font-semibold">Chat with us on WhatsApp</span>
+            <!-- Arrow -->
+            <div class="absolute right-0 top-1/2 transform translate-x-1/2 -translate-y-1/2 rotate-45 w-2 h-2 bg-gray-900"></div>
+        </div>
+        
+        <!-- Pulse Animation -->
+        <div class="absolute inset-0 rounded-full bg-green-500 animate-ping opacity-30"></div>
+    </div>
+</a>
+
+<style>
+    @keyframes ping {
+        75%, 100% {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+    }
+    
+    .animate-ping {
+        animation: ping 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+    }
+</style>
+
 </body>
 </html>

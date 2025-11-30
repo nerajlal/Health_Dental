@@ -28,6 +28,26 @@ class LandingController extends Controller
         return view('landing.story');
     }
 
+    public function privacy()
+    {
+        return view('landing.privacy');
+    }
+
+    public function terms()
+    {
+        return view('landing.terms');
+    }
+
+    public function refund()
+    {
+        return view('landing.refund');
+    }
+
+    public function faq()
+    {
+        return view('landing.faq');
+    }
+
     public function partnerRegister(Request $request)
     {
         $validated = $request->validate([
