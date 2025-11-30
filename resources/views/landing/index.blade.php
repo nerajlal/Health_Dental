@@ -4,52 +4,279 @@
 
 @section('content')
 <!-- Hero Section -->
-<section class="gradient-bg text-white py-24 md:py-32">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<section class="relative gradient-bg text-white py-24 md:py-32 overflow-hidden">
+    <!-- Animated Background Elements -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-20 left-10 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div class="absolute top-40 right-10 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div class="absolute -bottom-8 left-20 w-72 h-72 bg-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <!-- Left Content -->
             <div class="text-center lg:text-left">
-                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight" style="font-family: 'Playfair Display', serif;">
-                    Professional Dental Supply Solutions
+                <!-- Badge -->
+                <div class="inline-flex items-center px-4 py-2 bg-white bg-opacity-20 backdrop-blur-sm rounded-full mb-6 animate-fade-in-down">
+                    <span class="w-2 h-2 bg-green-400 rounded-full mr-2 animate-pulse"></span>
+                    <span class="text-sm font-semibold">Trusted by 500+ Dental Clinics</span>
+                </div>
+
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight animate-fade-in-up" style="font-family: 'Playfair Display', serif;">
+                    Professional Dental Supply 
+                    <span class="block mt-2 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 via-pink-300 to-purple-300">
+                        <span id="typed-text"></span><span class="animate-blink">|</span>
+                    </span>
                 </h1>
-                <p class="text-xl md:text-2xl mb-4 text-blue-100">
-                    Save 30-40% Through Collective Purchasing Power
+                
+                <p class="text-xl md:text-2xl mb-4 text-blue-100 animate-fade-in-up animation-delay-200">
+                    💰 Save 30-40% Through Collective Purchasing Power
                 </p>
-                <p class="text-lg mb-8 text-blue-50 max-w-2xl mx-auto lg:mx-0">
+                
+                <p class="text-lg mb-8 text-blue-50 max-w-2xl mx-auto lg:mx-0 animate-fade-in-up animation-delay-400">
                     Join hundreds of dental clinics leveraging bulk purchasing to reduce operational costs while maintaining premium quality standards.
                 </p>
-                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                    <a href="{{ route('landing.about') }}" class="btn-secondary bg-white text-blue-900 border-white hover:bg-blue-50">
-                        Learn How It Works
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start animate-fade-in-up animation-delay-600">
+                    <a href="{{ route('landing.about') }}" class="group relative inline-flex items-center justify-center px-8 py-4 bg-white text-blue-900 rounded-lg font-semibold text-lg overflow-hidden transition-all hover:scale-105 hover:shadow-2xl">
+                        <span class="relative z-10 flex items-center">
+                            <i class="fas fa-rocket mr-2"></i>
+                            Learn How It Works
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-50 to-purple-50 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
                     </a>
-                    <a href="{{ route('landing.contact') }}" class="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold text-lg hover:bg-white hover:text-blue-900 transition">
-                        Get In Touch
+                    <a href="{{ route('landing.contact') }}" class="group relative inline-flex items-center justify-center px-8 py-4 border-2 border-white text-white rounded-lg font-semibold text-lg overflow-hidden transition-all hover:scale-105">
+                        <span class="relative z-10 flex items-center">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            Get In Touch
+                        </span>
+                        <div class="absolute inset-0 bg-white transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                        <span class="absolute inset-0 flex items-center justify-center text-blue-900 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <i class="fas fa-phone-alt mr-2"></i>
+                            Get In Touch
+                        </span>
                     </a>
                 </div>
+
+                <!-- Trust Indicators -->
+                <div class="mt-12 flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm text-blue-100 animate-fade-in-up animation-delay-800">
+                    <div class="flex items-center">
+                        <i class="fas fa-shield-alt text-green-300 mr-2"></i>
+                        <span>Verified Suppliers</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-lock text-green-300 mr-2"></i>
+                        <span>Secure Payments</span>
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-truck text-green-300 mr-2"></i>
+                        <span>Fast Delivery</span>
+                    </div>
+                </div>
             </div>
-            <div class="hidden lg:block">
-                <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-20">
-                    <h3 class="text-2xl font-bold mb-6">Cost Comparison</h3>
-                    <div class="space-y-4">
-                        <div class="flex justify-between items-center p-4 bg-white bg-opacity-10 rounded-lg">
-                            <span class="font-medium">Traditional Purchase:</span>
-                            <span class="text-2xl font-bold">₹1,000</span>
+
+            <!-- Right Content - Interactive Cards -->
+            <div class="hidden lg:block animate-fade-in-left">
+                <!-- Main Card -->
+                <div class="relative">
+                    <!-- Floating Card 1 - Cost Comparison -->
+                    <div class="bg-white bg-opacity-10 backdrop-blur-lg rounded-2xl p-8 border border-white border-opacity-20 shadow-2xl transform hover:scale-105 transition-all duration-300">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="text-2xl font-bold">Cost Comparison</h3>
+                            <div class="w-12 h-12 bg-green-400 bg-opacity-20 rounded-full flex items-center justify-center">
+                                <i class="fas fa-chart-line text-green-300 text-xl"></i>
+                            </div>
                         </div>
-                        <div class="text-center text-3xl">
-                            <i class="fas fa-arrow-down"></i>
+                        
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center p-4 bg-white bg-opacity-10 rounded-lg backdrop-blur-sm transform hover:translate-x-2 transition-transform">
+                                <span class="font-medium">Traditional Purchase:</span>
+                                <span class="text-2xl font-bold text-red-300">₹1,000</span>
+                            </div>
+                            
+                            <div class="text-center text-3xl animate-bounce-slow">
+                                <i class="fas fa-arrow-down text-yellow-300"></i>
+                            </div>
+                            
+                            <div class="flex justify-between items-center p-4 bg-gradient-to-r from-green-500 to-emerald-500 bg-opacity-90 rounded-lg shadow-lg transform hover:translate-x-2 transition-transform">
+                                <span class="font-medium">With DentalChain:</span>
+                                <span class="text-2xl font-bold">₹600-700</span>
+                            </div>
+                            
+                            <div class="text-center p-4 bg-yellow-400 bg-opacity-20 rounded-lg backdrop-blur-sm">
+                                <div class="text-2xl font-bold text-yellow-300 animate-pulse">
+                                    💰 Save 30-40%!
+                                </div>
+                                <div class="text-sm text-yellow-200 mt-1">That's ₹300-400 per item!</div>
+                            </div>
                         </div>
-                        <div class="flex justify-between items-center p-4 bg-green-500 bg-opacity-90 rounded-lg">
-                            <span class="font-medium">With DentalChain:</span>
-                            <span class="text-2xl font-bold">₹600-700</span>
+                    </div>
+
+                    <!-- Floating Badge -->
+                    <div class="absolute -top-6 -right-6 bg-gradient-to-r from-pink-500 to-purple-500 text-white px-6 py-3 rounded-full shadow-2xl transform rotate-12 hover:rotate-0 transition-transform animate-float">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold">35%</div>
+                            <div class="text-xs">Avg. Savings</div>
                         </div>
-                        <div class="text-center text-xl font-bold text-green-300">
-                            Save 30-40%!
-                        </div>
+                    </div>
+
+                    <!-- Floating Icon -->
+                    <div class="absolute -bottom-4 -left-4 bg-blue-400 bg-opacity-30 backdrop-blur-sm p-4 rounded-2xl shadow-xl animate-float animation-delay-2000">
+                        <i class="fas fa-tooth text-white text-3xl"></i>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Scroll Indicator -->
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <i class="fas fa-chevron-down text-white text-2xl opacity-50"></i>
+    </div>
 </section>
+
+<style>
+    @keyframes blob {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+    }
+    
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+    
+    @keyframes bounce-slow {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes fade-in-down {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes fade-in-left {
+        from {
+            opacity: 0;
+            transform: translateX(50px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+    
+    @keyframes blink {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0; }
+    }
+    
+    .animate-blob {
+        animation: blob 7s infinite;
+    }
+    
+    .animate-float {
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    .animate-bounce-slow {
+        animation: bounce-slow 2s ease-in-out infinite;
+    }
+    
+    .animate-fade-in-down {
+        animation: fade-in-down 0.6s ease-out;
+    }
+    
+    .animate-fade-in-up {
+        animation: fade-in-up 0.6s ease-out;
+    }
+    
+    .animate-fade-in-left {
+        animation: fade-in-left 0.8s ease-out;
+    }
+    
+    .animate-blink {
+        animation: blink 1s infinite;
+    }
+    
+    .animation-delay-200 {
+        animation-delay: 0.2s;
+    }
+    
+    .animation-delay-400 {
+        animation-delay: 0.4s;
+    }
+    
+    .animation-delay-600 {
+        animation-delay: 0.6s;
+    }
+    
+    .animation-delay-800 {
+        animation-delay: 0.8s;
+    }
+    
+    .animation-delay-2000 {
+        animation-delay: 2s;
+    }
+    
+    .animation-delay-4000 {
+        animation-delay: 4s;
+    }
+</style>
+
+<script>
+    // Typing animation
+    const words = ['Solutions', 'Made Simple', 'At Best Prices', 'You Can Trust'];
+    let wordIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typedTextElement = document.getElementById('typed-text');
+    
+    function type() {
+        const currentWord = words[wordIndex];
+        
+        if (isDeleting) {
+            typedTextElement.textContent = currentWord.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            typedTextElement.textContent = currentWord.substring(0, charIndex + 1);
+            charIndex++;
+        }
+        
+        if (!isDeleting && charIndex === currentWord.length) {
+            setTimeout(() => isDeleting = true, 2000);
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            wordIndex = (wordIndex + 1) % words.length;
+        }
+        
+        const typingSpeed = isDeleting ? 50 : 100;
+        setTimeout(type, typingSpeed);
+    }
+    
+    // Start typing animation
+    setTimeout(type, 1000);
+</script>
+
 
 <!-- Stats Section -->
 <section class="py-16 bg-white">
