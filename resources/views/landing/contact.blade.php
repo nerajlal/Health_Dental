@@ -20,7 +20,7 @@
             <!-- Contact Form -->
             <div>
                 <h2 class="section-title text-3xl font-bold mb-6">Send Us a Message</h2>
-                <form action="#" method="POST" class="space-y-6">
+                <form id="contactForm" class="space-y-6">
                     @csrf
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
                         <div>
@@ -71,7 +71,7 @@
                     </div>
 
                     <button type="submit" class="w-full btn-primary">
-                        <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        <i class="fab fa-whatsapp mr-2"></i>Send via WhatsApp
                     </button>
                 </form>
             </div>
@@ -202,4 +202,48 @@
         </a>
     </div>
 </section>
+
+<script>
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Get form values
+    const firstName = document.getElementById('first_name').value;
+    const lastName = document.getElementById('last_name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const clinicName = document.getElementById('clinic_name').value;
+    const inquiryType = document.getElementById('inquiry_type').value;
+    const message = document.getElementById('message').value;
+    
+    // Format inquiry type
+    const inquiryTypeText = inquiryType === 'clinic' ? 'Dental Clinic' : 
+                           inquiryType === 'distributor' ? 'Distributor' : 'Other';
+    
+    // Create WhatsApp message
+    let whatsappMessage = '*New Contact Form Submission*\n\n';
+    whatsappMessage += '*Name:* ' + firstName + ' ' + lastName + '\n';
+    whatsappMessage += '*Email:* ' + email + '\n';
+    if (phone) whatsappMessage += '*Phone:* ' + phone + '\n';
+    if (clinicName) whatsappMessage += '*Company:* ' + clinicName + '\n';
+    whatsappMessage += '*Type:* ' + inquiryTypeText + '\n\n';
+    whatsappMessage += '*Message:*\n' + message;
+    
+    // Encode message for URL
+    const encodedMessage = encodeURIComponent(whatsappMessage);
+    
+    // WhatsApp number from config (remove any spaces, dashes, or special characters)
+    const whatsappNumber = '{{ config("contact.contact.whatsapp") }}'.replace(/[^0-9]/g, '');
+    
+    // Open WhatsApp with correct URL format
+    const whatsappURL = 'https://wa.me/' + whatsappNumber + '?text=' + encodedMessage;
+    window.open(whatsappURL, '_blank');
+    
+    // Reset form
+    this.reset();
+    
+    // Show success message
+    alert('Redirecting to WhatsApp... Please send the message to complete your inquiry.');
+});
+</script>
 @endsection
