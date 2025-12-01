@@ -57,7 +57,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Admin Routes
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminDashboard::class, 'index'])->name('dashboard');
     Route::get('/analytics', [AdminDashboard::class, 'analytics'])->name('analytics');
     
@@ -106,7 +106,7 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 // Clinic Routes
-Route::middleware(['auth'])->prefix('clinic')->name('clinic.')->group(function () {
+Route::middleware(['auth', 'role:clinic'])->prefix('clinic')->name('clinic.')->group(function () {
     Route::get('/dashboard', [ClinicDashboard::class, 'index'])->name('dashboard');
     
     // Products
@@ -141,7 +141,7 @@ Route::middleware(['auth'])->prefix('clinic')->name('clinic.')->group(function (
 });
 
 // Distributor Routes
-Route::middleware(['auth'])->prefix('distributor')->name('distributor.')->group(function () {
+Route::middleware(['auth', 'role:distributor'])->prefix('distributor')->name('distributor.')->group(function () {
     Route::get('/dashboard', [DistributorDashboard::class, 'index'])->name('dashboard');
     Route::get('/analytics', [DistributorDashboard::class, 'analytics'])->name('analytics');
     
