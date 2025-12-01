@@ -53,6 +53,7 @@ class ClinicController extends Controller
             'role' => 'clinic',
             'is_active' => true,
             'password' => \Hash::make('password123'), // Default password
+            'password_changed_at' => null, // Force password reset on first login
         ]);
 
         // Update request status
@@ -104,6 +105,9 @@ class ClinicController extends Controller
         $validated['role'] = 'clinic';
 
         $clinic = User::create($validated);
+        
+        // Force password reset on first login
+        $clinic->update(['password_changed_at' => null]);
 
         try {
             Mail::to($clinic->email)->send(new ClinicAccountCreated($clinic, $password));

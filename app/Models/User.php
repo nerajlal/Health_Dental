@@ -14,6 +14,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'password_changed_at',
         'role',
         'phone',
         'address',
@@ -32,6 +33,7 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'password_changed_at' => 'datetime',
             'is_active' => 'boolean',
         ];
     }
@@ -66,5 +68,10 @@ class User extends Authenticatable
     public function isDistributor()
     {
         return $this->role === 'distributor';
+    }
+
+    public function needsPasswordReset()
+    {
+        return is_null($this->password_changed_at);
     }
 }

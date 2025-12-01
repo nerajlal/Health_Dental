@@ -207,8 +207,7 @@ class ProductController extends Controller
                     'image' => $product->image ? asset('storage/' . $product->image) : null,
                     'distributor' => [
                         'name' => $product->distributor->name,
-                        'email' => $product->distributor->email,
-                        'phone' => $product->distributor->phone
+                        // Email and phone removed for privacy protection
                     ]
                 ];
             })

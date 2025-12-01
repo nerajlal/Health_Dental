@@ -385,8 +385,6 @@ function showProductDetails(index) {
             <h5 class="font-semibold text-gray-900 mb-3">Distributor Information</h5>
             <div class="bg-gray-50 p-4 rounded-lg">
                 <p class="font-semibold text-gray-900">${product.distributor.name}</p>
-                <p class="text-sm text-gray-600 mt-1"><i class="fas fa-envelope mr-2"></i>${product.distributor.email}</p>
-                <p class="text-sm text-gray-600"><i class="fas fa-phone mr-2"></i>${product.distributor.phone || 'N/A'}</p>
             </div>
         </div>
         

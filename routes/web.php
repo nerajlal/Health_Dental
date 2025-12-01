@@ -48,6 +48,12 @@ Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+// Forced Password Reset Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/password/force-reset', [AuthController::class, 'showForceResetForm'])->name('password.force-reset');
+    Route::post('/password/force-reset', [AuthController::class, 'forceResetPassword'])->name('password.force-reset.update');
+});
+
 // Profile Routes (for all authenticated users)
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [App\Http\Controllers\ProfileController::class, 'show'])->name('profile.show');

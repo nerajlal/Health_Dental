@@ -53,6 +53,7 @@ class DistributorController extends Controller
             'role' => 'distributor',
             'is_active' => true,
             'password' => \Hash::make('password123'), // Default password
+            'password_changed_at' => null, // Force password reset on first login
         ]);
 
         // Update request status
@@ -104,6 +105,9 @@ class DistributorController extends Controller
         $validated['role'] = 'distributor';
 
         $distributor = User::create($validated);
+        
+        // Force password reset on first login
+        $distributor->update(['password_changed_at' => null]);
 
         try {
             Mail::to($distributor->email)->send(new DistributorAccountCreated($distributor, $password));
