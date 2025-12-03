@@ -75,7 +75,7 @@
                     @enderror
                     <p class="mt-1 text-xs text-gray-500">
                         <i class="fas fa-info-circle mr-1"></i>
-                        Password must be at least 8 characters long
+                        Must include: uppercase, lowercase, number, and symbol (min. 8 chars)
                     </p>
                 </div>
 
@@ -97,13 +97,14 @@
                 <!-- Security Tips -->
                 <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
                     <h4 class="text-sm font-semibold text-yellow-900 mb-2">
-                        <i class="fas fa-lightbulb mr-2"></i>Password Tips
+                        <i class="fas fa-lightbulb mr-2"></i>Password Requirements
                     </h4>
                     <ul class="text-xs text-yellow-800 space-y-1">
-                        <li>• Use a mix of letters, numbers, and symbols</li>
-                        <li>• Avoid using personal information</li>
-                        <li>• Don't reuse passwords from other accounts</li>
-                        <li>• Make it memorable but hard to guess</li>
+                        <li>✓ At least 8 characters long</li>
+                        <li>✓ At least one uppercase letter (A-Z)</li>
+                        <li>✓ At least one lowercase letter (a-z)</li>
+                        <li>✓ At least one number (0-9)</li>
+                        <li>✓ At least one symbol (!@#$%^&*...)</li>
                     </ul>
                 </div>
 

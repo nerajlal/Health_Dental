@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Rules\Password;
 
 class AuthController extends Controller
 {
@@ -121,7 +122,10 @@ class AuthController extends Controller
     {
         $request->validate([
             'current_password' => 'required',
-            'password' => 'required|min:8|confirmed',
+            'password' => ['required', 'confirmed', Password::min(8)
+                ->mixedCase()
+                ->numbers()
+                ->symbols()],
         ]);
 
         $user = Auth::user();

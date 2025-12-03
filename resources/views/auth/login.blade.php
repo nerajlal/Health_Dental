@@ -108,9 +108,9 @@
                 <i class="fas fa-info-circle mr-2"></i>Demo Credentials
             </h3>
             <div class="space-y-2 text-sm text-blue-800">
-                <div><strong>Admin:</strong> admin@dental.com / password</div>
-                <div><strong>Clinic:</strong> clinic1@dental.com / password</div>
-                <div><strong>Distributor:</strong> distributor1@dental.com / password</div>
+                <div><strong>Admin:</strong> admin@dental.com / Password123@</div>
+                <div><strong>Clinic:</strong> clinic1@dental.com / Password123@</div>
+                <div><strong>Distri:</strong> distributor1@dental.com / Password123@</div>
             </div>
         </div>
     </div>

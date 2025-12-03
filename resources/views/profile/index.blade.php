@@ -102,7 +102,16 @@
                             @error('password')
                                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
                             @enderror
-                            <p class="text-sm text-gray-500 mt-1">Minimum 8 characters</p>
+                            <div class="mt-2 text-xs text-gray-600 space-y-1">
+                                <p class="font-medium">Password must include:</p>
+                                <ul class="list-disc list-inside ml-2">
+                                    <li>At least 8 characters</li>
+                                    <li>One uppercase letter (A-Z)</li>
+                                    <li>One lowercase letter (a-z)</li>
+                                    <li>One number (0-9)</li>
+                                    <li>One symbol (!@#$%^&*...)</li>
+                                </ul>
+                            </div>
                         </div>
 
                         <div>
